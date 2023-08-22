@@ -90,18 +90,14 @@
                                 <p>
                                     <span>name:
                                         <span id="profilename">
-                                            <?php
-                                            // echo $_SESSION['user']['name'];
-                                            ?>
+                                        {{$patient->username}}
                                         </span>
                                     </span>
                             </li>
                             <li>
                                 <p>
                                     <span>email:<span id="profileemail">
-                                            <?php
-                                            // echo " " . $_SESSION['user']['email'];
-                                            ?>
+                                        {{$patient->email}}
                                         </span>
                                     </span>
                             </li>
@@ -109,18 +105,14 @@
                                 <p>
                                     <span>age:
                                         <span id="profileage">
-                                            <?php
-                                            // echo " " . $_SESSION['user']['age'];
-                                            ?>
+                                            {{$patient->age}}
                                         </span>
                                     </span>
                             </li>
                             <li>
                                 <p>
                                     <span>from: <span id="profilefrom">
-                                            <?php
-                                            // echo " " . $_SESSION['user']['address'];
-                                            ?></span>
+                                        {{$patient->address}}</span>
                                     </span>
                                 </p>
                             </li>
@@ -144,9 +136,7 @@
                     <div class="welcome">
                         <p>welcome
                             <span>
-                                <?php
-                                //  echo $_SESSION['user']['name'];
-                                ?>
+                                {{$patient->username}}
                             </span> to
                         </p>
                         <h2>EDGE.</h2>
@@ -158,72 +148,35 @@
         </div>
         <!-- ///////////////////////////reports///////////////////////////////////////////////////// -->
         <section id="reports" class="sectionStart">
-
-
-
             <div class="title2">
                 <h1>reports</h1>
             </div>
             <div class="parent-container">
                 <div class="child1-container">
-                    {{-- 
                     @foreach ($reports as $report)
-                    <a href="./view.php?url={{ $report['url'] }}" target="_blank">
-                        <div class='card indgo pointer'>
-                            <div class="date-card">
-                                <div class="day">{{ date('d', strtotime($report['date'])) }}</div>
-                                <div>
-                                    <div class="month">{{ date('M', strtotime($report['date'])) }}</div>
-                                    <div class="year">{{ date('Y', strtotime($report['date'])) }}</div>
+
+
+                            <div class='card indgo pointer'>
+                                <div class="date-card">
+                                  
+                                    <div class="day">{{ date('d', strtotime($report->date)) }}</div>
+                                    <div>
+                                        <div class="month">{{ date('M', strtotime($report->date)) }}</div>
+                                        <div class="year">{{ date('Y', strtotime($report->date)) }}</div>
+                                    </div>
+                                </div>
+                                <div class="cardcontent">
+                                    <h2>{{ $report->test_name }}</h2>
+                                    <p>
+                                        This is a {{ $report->test_name }} test taken on {{ $report->date }} at {{ $report->time }} you can check the results of your test from here
+                                        <span style="margin-top:0.8rem; display:block; color:black;">
+                                            <a href="{{ route('viewDocument', ['url' => $report->url]) }}" target="_blank"> click here to view report</a>
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
-                            <div class="cardcontent">
-                                <h2>{{ $report['test_name'] }}</h2>
-                                <p>
-                                    This is a {{ $report['test_name'] }} test taken on
-                                    {{ $report['date'] }} at {{ $report['time'] }} you can check the
-                                    results of your test from here
-                                    <span style="margin-top:0.8rem; display:block; color:black;">
-                                        Click here to view your test results
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
                     @endforeach
-                    --}}
-                    <!-- 
-                    <div class='card indgo pointer'>
-                        <div class="date-card">
-                            <div class="day">21</div>
-                            <div>
-                                <div class="month">September</div>
-                                <div class="year">2017</div>
-                            </div>
-                        </div>
-                        <div class="cardcontent">
-                            <h2> $testType</h2>
-                            <p>Lisque persius interesset his et, in quot quidam persequeris vim,
-                                ad mea essent possim iriure.
-                        </div>
-                    </div> 
-                    -->
-                    <!-- 
-                    <div class='card indgo pointer'>
-                        <div class="date-card">
-                            <div class="day">21</div>
-                            <div>
-                                <div class="month">September</div>
-                                <div class="year">2017</div>
-                            </div>
-                        </div>
-                        <div class="cardcontent">
-                            <h2> $testType</h2>
-                            <p>Lisque persius interesset his et, in quot quidam persequeris vim,
-                                ad mea essent possim iriure.
-                        </div>
-                    </div>
-                    -->
                     <!-- 
                     <div class='card indgo pointer'>
                         <div class="date-card">
@@ -242,63 +195,51 @@
                     -->
                 </div>
             </div>
-            
         </section>
-        <section id="appiontments" class="sectionStart">
-            <div class=" report" id="appointments">
-
-
-                <div class="title">
-                    <h1>appointments</h1>
-                </div>
-                <h3 class="input-error" style="margin-top: 1.5rem; width:100%, text-align:center;" id="form-error">
-                    <?php
-                        //  if (!empty($error)) : ?>
-                    <?php
-                    //  echo $error; ?>
-                    <?php 
-                // endif; ?>
-                </h3>
-                <div class="parent-container">
-                    <div class="chhild2-container">
-                        <?php 
-                            // foreach ($appointments as $appointment) : ?>
-                        <div class='card indgo pointer' data-id="<?php 
-                        // echo $appointment['app_id'] ?>">
-                            <div class="date-card">
-                                <div class="day"><?php
-                                    //  echo date('d', strtotime($appointment['date'])) ?></div>
-                                <div>
-                                    <div class="month"><?php 
-                                        // echo date('M', strtotime($appointment['date'])) ?></div>
-                                    <div class="year"><?php
-                                    //  echo date('Y', strtotime($appointment['date'])) ?></div>
-                                </div>
-                            </div>
-                            <div class="cardcontent">
-                                {{-- 
-                                <h2>{{ $appointment['test_name'] }}</h2>
-                                <p>
-                                    You have an appointment on {{ $appointment['date'] }} at
-                                    {{ $appointment['time'] }} for a {{ $appointment['test_name'] }} test
-                                </p>
-                                <div class="download">
-                                    <div class=" rowButtons">
-                                        <div class="update" data-id="{{ $appointment['app_id'] }}"
-                                            data-phone="{{ $appointment['phone_number'] }}"><img src="assets/icons8-modify-20.png"></div>
-                                        <div class="delete" data-id="{{ $appointment['app_id'] }}"> <img src="assets/icons8-delete-20.png"></div>
-                                    </div>
-                                </div>
-                                --}}
-                            </div>
-                            
+        
+        
+<section id="appiontments" class="sectionStart">
+    <div class="report" id="appointments">
+        <div class="title">
+            <h1>appointments</h1>
+        </div>
+        <h3 class="input-error" style="margin-top: 1.5rem; width: 100%; text-align: center;" id="form-error">
+            {{-- @if (!empty($error))
+                {{ $error }}
+            @endif --}}
+        </h3>
+        <div class="parent-container">
+            <div class="chhild2-container">
+                @foreach ($appointments as $appointment)
+                <div class='card indgo pointer' data-id="{{ $appointment->app_id }}">
+                    <div class="date-card">
+                        <div class="day">{{ date('d', strtotime($appointment->date)) }}</div>
+                        <div>
+                            <div class="month">{{ date('M', strtotime($appointment->date)) }}</div>
+                            <div class="year">{{ date('Y', strtotime($appointment->date)) }}</div>
                         </div>
-                        <?php 
-                    // endforeach; ?>
                     </div>
-
+                    <div class="cardcontent">
+                        <h2>{{ $appointment->test_name }}</h2>
+                        <p>
+                            You have an appointment on {{ $appointment->date }} at
+                            {{ $appointment->time }} for a {{ $appointment->test_name }} test
+                        </p>
+                        <div class="download">
+                            <div class="rowButtons">
+                                <div class="update" data-id="{{ $appointment->app_id }}"
+                                    data-phone="{{ $appointment->phone_number }}"><img src={{asset("assets/icons8-modify-20.png")}}></div>
+                                <div class="delete" data-id="{{ $appointment->app_id }}"><img src={{asset("assets/icons8-delete-20.png")}}></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-        </section>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+
 
         <footer class="footer" id="contact">
             <div class="footer-container">
@@ -365,29 +306,30 @@
 
 
         <div id="deleteModal" class="modal">
-            <form action="profile.php" method="POST" class="modal-content">
+            <form action="{{ route('deleteAppointments') }}" method="POST" class="modal-content">
+                @csrf
                 <input type="hidden" id="delete_id_input" name="app_id" value="">
+                <input type="hidden" name="mrn" value="{{ $mrn }}">
                 <span class="close">&times;</span>
                 <h3>Are you sure you want to delete this record?</h3>
                 <div class="modal-buttons">
-
                     <button type="submit" name="delete_app" id="confirmButton">Delete</button>
                 </div>
             </form>
         </div>
+        
         <!-- The update modal form -->
         <div id="updateModal" class="update-modal">
             <div class="update-modal-content">
                 <span class="closeupdate">&times;</span>
                 <h2>Update Appointment</h2>
-                <form action="profile.php" method="POST">
+                <form action="{{ route('updateAppointments') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="mrn" value="{{ $mrn }}">
                     <label for="appointmentid"></label>
-                    <input type="text" id="appIdForm" placeholder="appointment-id">
-                    <input type="hidden" id="appIdForm_hidden" name="appointmentid" placeholder="appointment-id">
-                    <label for=" email"></label>
-                    <input type="email" value="<?php 
-                    // echo $_SESSION['user']['email']; ?>" id="emailform" name="email"
-                        placeholder="email">
+                    <input type="text" id="appIdForm" placeholder="appointment-id" name="appointmentid">
+                    <label for="email"></label>
+                    <input type="email" value="{{ $patient->email }}" id="emailform" name="email" placeholder="email">
                     <label for="phone"></label>
                     <input type="tel" id="phoneform" name="phone" placeholder="phone">
                     <label for="select"></label>
@@ -402,15 +344,11 @@
                     </select>
                     <label for="time"></label>
                     <input name="time" type="time" placeholder="time" name="time">
-
-
                     <label for="date"></label>
                     <input name="date" type="date" placeholder="Date">
-
-
                     <button type="submit" name="update_user" id="updateButton">Update</button>
-
                 </form>
+                
             </div>
         </div>
 
@@ -418,8 +356,9 @@
             <div class="edit-modal-content">
                 <span class="close-edit" id="close-user-info">&times;</span>
                 <h2>Edit Info</h2>
-                <form action="profile.php" method="POST">
-
+                <form action="{{ route('updateUserInfo') }}" method="POST">
+@csrf
+<input type="hidden" name="mrn" value="{{ $mrn }}">
                     <label for=""></label>
                     <input type="text" id="editusername" name="username_input" placeholder="name">
                     <label for=""></label>
