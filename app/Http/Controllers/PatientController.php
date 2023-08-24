@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Hash;
 class PatientController extends Controller
 {
     public function index()
     {
         return view('patientViews.index');
     }
-    public function profile($mrn){
+    public function profile(){
+   
+         $mrn= session()->get('mrn');
+  
         $patient  =  DB::table('users')->where('mrn',$mrn)->first();
         $appointments = DB::table('appointments')
         ->join('tests', 'appointments.test_type', '=', 'tests.test_id')
@@ -131,7 +134,78 @@ class PatientController extends Controller
     }
     
     
+public function showSignup(){
+
+    return view("patientviews.signup");
+}
+
+public function handleSignup(Request $request){
+
+
+    $request->validate([
+        'username' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:8',
+        'address' => 'required',
+        'date' => 'required|date|age_above:16',
+    ], [
+        'date.age_above' => 'You must be at least 16 years old to register.'
+    ]);
     
+ 
+    
+    $email= $request->input('email');
+     $name = $request->input('username');
+     $password = $request->input('password');
+     $address= $request->input('address');
+     $date=   $request->input('date');
+ $hashedPassword = Hash::make($password);
+ 
+ DB::insert("INSERT INTO users (username, email, password, address, birthdate) VALUES (?, ?, ?, ?, ?)", [$name, $email, $hashedPassword, $address, $date]);
+
+ $mrn = DB::select("SELECT mrn FROM users WHERE email = ? ", [$email]);
+    session()->regenerate();
+        session(['mrn' => $mrn[0]->mrn]);
+return to_route('profile');
+
+     
+}
+
+    
+    public function showLogin(){
+        return view("patientviews.login");
+    }
+
+    public function handleLogin(Request $request){
+    $email = $request->input('email');
+    $password = $request->input('password');
+    
+    $user = DB::select("SELECT * FROM users WHERE email = ? ", [$email]);
+    if($user == null){
+       return back()->with('error', ' wrong email')->withInput();
+    }
+
+    if (Hash::check($password, $user[0]->password)) {
+     
+session()->regenerate();
+        session(['mrn' => $user[0]->mrn]);
+return to_route('profile');
+        
+    } else {
+        return back()->with('error', ' wrong password');
+    }
+    
+    }
+    
+public function logout(){
+    
+session()->invalidate();
+return to_route('index');
+    
+
+    
+}
+
     
     public function viewDocument($url){
 

@@ -106,19 +106,17 @@
     });
   </script>
   <div class="signup-page">
-    <form action="login.php" class="signup-form" name="POST" method="POST">
-
+    <form action="{{route('handleLogin')}}" class="signup-form" name="POST" method="POST">
+@csrf
       <div class="form-container">
         <h1 class="signup-header">Login</h1>
+        @if(session('error'))
         <h3 class="input-error" id="form-error">
-          <?php 
-            // if (!empty($error)) : ?>
-            <?php
-            //  echo $error; ?>
-          <?php
-        //  endif; ?>
+            {{ session('error') }}
         </h3>
-        <input type="text" placeholder="Email" id="email" name="email" />
+    @endif
+    
+        <input type="text" placeholder="Email" id="email" name="email" value="{{old('email')}}" />
         <h3 class="input-error" id="email-error"></h3>
         <input type="password" placeholder="Password" id="password" name="password" />
         <h3 class="input-error" id="password-error"></h3>

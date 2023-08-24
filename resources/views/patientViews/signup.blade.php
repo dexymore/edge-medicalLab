@@ -195,24 +195,33 @@
      });
    </script>
    <div class="signup-page">
-     <form action="signup.php" class="signup-form" name="POST" method="POST">
+     <form action="{{route("handleSignup")}}" class="signup-form" name="POST" method="POST">
+        @csrf
        <div class="form-container">
          <h1 class="signup-header" id="form-error">Sign up</h1>
-         <h3 class="input-error" id="form-error">
-           <?php if (!empty($error)) : ?>
-             <?php echo $error; ?>
-           <?php endif; ?>
-         </h3>
+      
+  
          <input type="text" id="name" placeholder="Full Name" name="username" />
-         <h3 class="input-error" id="name-error"></h3>
+  @error('username')
+      <h3 class="input-error" id="name-error">{{$message}}</h3>
+  @enderror<br>
+       
          <input type="email" id="email" placeholder="Email" name="email" />
-         <h3 class="input-error" id="email-error"></h3>
+         @error('email')
+         <h3 class="input-error" id="name-error">{{$message}}</h3>
+     @enderror<br>
          <input type="password" id="password" placeholder="Password" name="password" />
-         <h3 class="input-error" id="password-error"></h3>
+         @error('password')
+         <h3 class="input-error" id="name-error">{{$message}}</h3>
+     @enderror<br>
          <input type="text" id="address" placeholder="Address" name="address" />
-         <h3 class="input-error" id="address-error"></h3>
+         @error('address')
+         <h3 class="input-error" id="name-error">{{$message}}</h3>
+     @enderror<br>
          <input type="date" id="date" placeholder="date" name="date" />
-         <h3 class="input-error" id="date-error"></h3>
+         @error('date')
+         <h3 class="input-error" id="name-error">{{$message}}</h3>
+     @enderror<br>
          <button type="submit" id="submit" class="btn signup-form__btn" name="signup" value="Signup">
            Create Account
          </button>

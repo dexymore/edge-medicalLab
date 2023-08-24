@@ -33,22 +33,24 @@
             </div>
         </div>
         <div class="navbar-right__actions ">
-            <div class="navbar-right ">
-                <?php if (!isset($_SESSION['user'])) : ?>
-                    <a class="btn sign-in" href="./login.php">Sign In</a>
-                    <a class="btn sign-up" href="./signup.php">Sign Up</a>
-                <?php else : ?>
-                    <a class="btn sign-in" href="./logout.php">Logout</a>
-                    <?php if ($_SERVER['REQUEST_URI'] == "/MedicalLabratory/" || $_SERVER['REQUEST_URI'] == "/MedicalLabratory/index.php") {
-                        echo '<a class="account-btn" href="./profile.php">
-                            <img src="./assets/icons8-user-24.png" alt="">
-                        </a>';
-                    } ?>
-                    <!-- <a class="account-btn" href="./profile.php">
-                            <img src="./assets/icons8-user-24.png" alt="">
+            <div class="navbar-right">
+                @if(!session('mrn'))
+             
+                    <a class="btn sign-in" href="{{ route('login') }}">Sign In</a>
+                    <a class="btn sign-up" href="{{ route('signup') }}">Sign Up</a>
+                @else
+                    <a class="btn sign-in" href="{{ route('logout') }}">Logout</a>
+                    @if(request()->is('/') || request()->is('index.php'))
+                        <a class="account-btn" href="{{ route('profile') }}">
+                            <img src="{{ asset('assets/icons8-user-24.png') }}" alt="">
+                        </a>
+                    @endif
+                    <!-- <a class="account-btn" href="{{ route('profile') }}">
+                            <img src="{{ asset('assets/icons8-user-24.png') }}" alt="">
                         </a> -->
-                <?php endif; ?>
+                @endif
             </div>
+            
         </div>
         <div class="navbar-right ">
             <div class="navbar-btn ">

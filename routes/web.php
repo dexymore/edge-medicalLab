@@ -4,6 +4,7 @@ use App\Http\Controllers\PatientController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,12 +16,32 @@ use Illuminate\Support\Facades\DB;
 |
 */
 //patient routes
+
 Route::get('/',[PatientController::class,'index'] )->name('index');
-Route::get('/profile/{mrn}',[PatientController::class,'profile'] )->name('profile');
-Route::get('/view-document/{url}',[PatientController::class,'viewDocument'])->name('viewDocument');
+
+
+Route::group(['middleware'=>'PatientAuth'],function(){
+Route::get('/profile',[PatientController::class,'profile'] )->name('profile');
+Route::get('/view-document/{url}',[PatientController::class,'viewDocument'])->name('viewDocument');  
 Route::post('/delete-appointments', [PatientController::class,'deleteAppointments'])->name('deleteAppointments');
 Route::post('/update-appointments', [PatientController::class,'updateAppointments'])->name('updateAppointments');
 Route::post('/update-userinfo', [PatientController::class,'updateUserInfo'])->name('updateUserInfo');
+Route::get('/logout', [PatientController::class,'logout'])->name('logout');
+} );
+
+
+Route::group(['middleware'=>'GuestPatientAuth'],function(){
+    Route::get('/login', [PatientController::class,'showLogin'])->name('login');
+    Route::post('/handle-login', [PatientController::class,'handleLogin'])->name('handleLogin');
+    Route::get('/signup', [PatientController::class,'showSignup'])->name('signup');
+    Route::post('/handle-signup', [PatientController::class,'handleSignup'])->name('handleSignup');
+    
+    
+});
+
+
+
+
 
 
 
