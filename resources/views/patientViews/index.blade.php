@@ -409,53 +409,59 @@
                     consequatur sed quam recusandae quos at dolorem.</p>
                 <div class="contact-us-form-group">
                     <div class="contact-us-right-group">
-                        <form action="index.php" method="POST" class="contact-form">
+                        <form action="{{route("makeAppointment")}}" method="POST" class="contact-form">
+                            @csrf
                             <h1 class="appointment-header">Make an Appointment</h1>
-                            <?php if (!empty($appointmentError)) : ?>
+                            {{-- @if (!empty($appointmentError))
                             <h3 class="input-error" id="form-error">
-                                <?php echo $appointmentError; ?>
+                                {{ $appointmentError }}
                             </h3>
-                            <?php endif; ?>
+                            @endif --}}
                             <ul class="contact-form-input">
                                 <li>
-                                    <input type="text" value="<?php
-                                                                if (isset($_SESSION['user'])) {
-                                                                    echo $_SESSION['user']['name'];
-                                                                }
-                                                                ?>" placeholder="Your name" name="username" <?php if (isset($_SESSION['user'])) {
-                                                                                                                echo "disabled";
-                                                                                                            } ?>>
+                                    <input type="text" value="{{ isset($patient->username) ? $patient->username : '' }}"
+                                           placeholder="Your name" name="username" {{ session()->has('mrn') ? 'disabled' : '' }}>
                                 </li>
                                 <li>
-                                    <input type="email" value="<?php
-                                                                if (isset($_SESSION['user'])) {
-                                                                    echo $_SESSION['user']['email'];
-                                                                }
-                                                                ?>" placeholder="Your email" name="email" <?php if (isset($_SESSION['user'])) {
-                                                                                                                echo "disabled";
-                                                                                                            } ?>>
+                                    <input type="email" value="{{ isset($patient->email) ? $patient->email : '' }}"
+                                           placeholder="Your email" name="email" {{ session()->has('mrn') ? 'disabled' : '' }}>
                                 </li>
+                                
                                 <li>
                                     <input type="text" placeholder="Your Phone Number" id="phone" name="phone">
+                                @error('phone')
+                                <h3 class="input-error" id="name-error">{{$message}}</h3>
+                                    
+                                @enderror
                                 </li>
-                         {{-- <li>
-    <select class="select" name="selected">
-        <option value="0">Test Type:</option>
-        @foreach ($tests as $test)
-        <option value="{{ $test['test_id'] }}">
-            {{ $test['name'] }}
-        </option>
-        @endforeach
-    </select>
-</li> --}}
-
+                                <li>
+                                    <select class="select" name="selected">
+                                        <option value="0">Test Type:</option>
+                                        @foreach ($tests as $test)
+                                        <option value="{{ $test->test_id }}">
+                                            {{ $test->name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @error('selected')
+                                          <h3 class="input-error" id="name-error">{{$message}}</h3>
+                                        
+                                    @enderror
+                                </li>
                                 <li>
                                     <input class="date" type="time" placeholder="time" name="time">
+                                    @error('time')
+                                          <h3 class="input-error" id="name-error">{{$message}}</h3>
+                                        
+                                    @enderror
                                 </li>
                                 <li>
                                     <input class="date" id="date" type="date" placeholder="Date" name="date">
-                                </li>
 
+                                    @error('date')
+                                          <h3 class="input-error" id="name-error">{{$message}}</h3>
+                                        @enderror
+                                </li>
                             </ul>
                             <div class="contact-actions"></div>
                             <button class="btn btn-appointment btn-action-1" name="appointment" type="submit"
@@ -465,7 +471,7 @@
                     <div class="contact-us-left-group">
                         <div class="contacts-item">
                             <div class="contacts-item-left">
-                                <img src={{asset("./assets/pin.png")}} alt="">
+                                <img src="{{ asset('./assets/pin.png') }}" alt="">
                             </div>
                             <div class="contacts-item-right">
                                 <h3>OUR ADDRESS</h3>
@@ -476,7 +482,7 @@
                         </div>
                         <div class="contacts-item">
                             <div class="contacts-item-left">
-                                <img src={{asset("./assets/telephone.png")}} alt="">
+                                <img src="{{ asset('./assets/telephone.png') }}" alt="">
                             </div>
                             <div class="contacts-item-right">
                                 <h3>PHONE NUMBER</h3>
@@ -487,7 +493,7 @@
                         </div>
                         <div class="contacts-item">
                             <div class="contacts-item-left">
-                                <img src={{asset("./assets/mail.png")}} alt="">
+                                <img src="{{ asset('./assets/mail.png') }}" alt="">
                             </div>
                             <div class="contacts-item-right">
                                 <h3>EMAIL ADDRESS</h3>
@@ -498,7 +504,7 @@
                         </div>
                         <div class="contacts-item">
                             <div class="contacts-item-left">
-                                <img src={{asset("./assets/settings.png")}} alt="">
+                                <img src="{{ asset('./assets/settings.png') }}" alt="">
                             </div>
                             <div class="contacts-item-right">
                                 <h3>WORKING HOURS</h3>
@@ -510,6 +516,7 @@
                     </div>
                 </div>
             </div>
+            
             <footer class="footer">
                 <div class="footer-container">
                     <div class="footer-contact-us">

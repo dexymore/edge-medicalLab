@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 
 Route::get('/',[PatientController::class,'index'] )->name('index');
 
-
+//auth middleware to make sure that the user is logged in
 Route::group(['middleware'=>'PatientAuth'],function(){
 Route::get('/profile',[PatientController::class,'profile'] )->name('profile');
 Route::get('/view-document/{url}',[PatientController::class,'viewDocument'])->name('viewDocument');  
@@ -27,6 +28,8 @@ Route::post('/delete-appointments', [PatientController::class,'deleteAppointment
 Route::post('/update-appointments', [PatientController::class,'updateAppointments'])->name('updateAppointments');
 Route::post('/update-userinfo', [PatientController::class,'updateUserInfo'])->name('updateUserInfo');
 Route::get('/logout', [PatientController::class,'logout'])->name('logout');
+Route::post('/update-password', [PatientController::class,'updatePassword'])->name('updatePassword');
+Route::post('/make-appointment', [PatientController::class,'makeAppointment'])->name('makeAppointment');
 } );
 
 
@@ -45,22 +48,28 @@ Route::group(['middleware'=>'GuestPatientAuth'],function(){
 
 
 
-// Route::get('/login', function () {
-//     return view('userViews/login');
-// });
-// Route::get('/signup', function () {
-//     return view('userViews/signup');
-// });
+///admin routes
 
-// Route::get('/admin', function () {
-//     return view('adminViews/index');
-// });
-// Route::get('/appointments', function () {
-//     return view('adminViews/appointments');
-// });
-// Route::get('/reports', function () {
-//     return view('adminViews/reports');
-// });
+Route::get('/adminLogin',[AdminController::class,'showAdminLogin'])->name('adminLogin');
+Route::post('/handleAdminLogin',[AdminController::class,'handleAdminLogin'])->name('handleAdminLogin');
+
+
+Route::get('/adminProfile',[AdminController::class,'adminProfile'])->name('adminProfile');
+Route::post('/deleteUser',[AdminController::class,'deleteUser'])->name('deleteUser');
+Route::post('/editUserInfo',[AdminController::class,'editUserInfo'])->name('editUserInfo');
+Route::post('/addAppointment',[AdminController::class,'addAppointment'])->name('addAppointment');
+Route::get('/adminAppoinments',[AdminController::class,'adminAppoinments'])->name('adminAppoinments');
+Route::post('updateUserAppointment',[AdminController::class,'updateUserAppointment'])->name('updateUserAppointment');
+
+
+
+
+
+
+Route::get('/reports', function () {
+    return view('adminViews/reports');
+});
+
 // Route::get('/loginAdmin', function () {
 //     return view('adminViews/login');
 // });

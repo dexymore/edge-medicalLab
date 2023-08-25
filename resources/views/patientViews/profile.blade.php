@@ -30,7 +30,7 @@
 //     $appointments = fetchAppointments($_SESSION['user']['id']);
 // }
 // $birthdate = $_SESSION['user']['birthdate'];
-// $formattedDate = date('Y-m-d', strtotime($birthdate));
+
 
 // if (isset($_POST['edit_user'])) {
 //     $mrn = $_SESSION['user']['id'];
@@ -309,7 +309,7 @@
             <form action="{{ route('deleteAppointments') }}" method="POST" class="modal-content">
                 @csrf
                 <input type="hidden" id="delete_id_input" name="app_id" value="">
-                <input type="hidden" name="mrn" value="{{ $mrn }}">
+                {{-- <input type="hidden" name="mrn" value="{{ $mrn }}"> --}}
                 <span class="close">&times;</span>
                 <h3>Are you sure you want to delete this record?</h3>
                 <div class="modal-buttons">
@@ -317,7 +317,9 @@
                 </div>
             </form>
         </div>
-        
+
+
+
         <!-- The update modal form -->
         <div id="updateModal" class="update-modal">
             <div class="update-modal-content">
@@ -325,27 +327,44 @@
                 <h2>Update Appointment</h2>
                 <form action="{{ route('updateAppointments') }}" method="POST">
                     @csrf
-                    <input type="hidden" name="mrn" value="{{ $mrn }}">
+                    {{-- <input type="hidden" name="mrn" value="{{ $mrn }}"> --}}
                     <label for="appointmentid"></label>
-                    <input type="text" id="appIdForm" placeholder="appointment-id" name="appointmentid">
+                    <input type="hidden" id="appIdForm" placeholder="appointment-id" name="appointmentid">
                     <label for="email"></label>
-                    <input type="email" value="{{ $patient->email }}" id="emailform" name="email" placeholder="email">
+                    <input type="email" disabled value="{{ $patient->email }}" id="emailform" name="email" placeholder="email">
                     <label for="phone"></label>
                     <input type="tel" id="phoneform" name="phone" placeholder="phone">
+@error('phone')
+        <h3 class="input-error" id="phone-error">{{$message}}</h3>
+    @enderror
+    
+
+
                     <label for="select"></label>
                     <select class="select" name="selected">
-                        <option value="0">Test Type:</option>
-                        <option value="1">Cardiologists</option>
-                        <option value="2">Dermatologists</option>
-                        <option value="3">Endocrinologists</option>
-                        <option value="4">Gastroenterologists</option>
-                        <option value="5">Allergists</option>
-                        <option value="6">Immunologists</option>
+                        <option value="0" {{ old('selected') == '0' ? 'selected' : '' }}>Test Type:</option>
+                        <option value="1" {{ old('selected') == '1' ? 'selected' : '' }}>Cardiologists</option>
+                        <option value="2" {{ old('selected') == '2' ? 'selected' : '' }}>Dermatologists</option>
+                        <option value="3" {{ old('selected') == '3' ? 'selected' : '' }}>Endocrinologists</option>
+                        <option value="4" {{ old('selected') == '4' ? 'selected' : '' }}>Gastroenterologists</option>
+                        <option value="5" {{ old('selected') == '5' ? 'selected' : '' }}>Allergists</option>
+                        <option value="6" {{ old('selected') == '6' ? 'selected' : '' }}>Immunologists</option>
                     </select>
+                    @error('selected')
+        <h3 class="input-error" id="phone-error">{{$message}}</h3>
+    @enderror
+                    
                     <label for="time"></label>
-                    <input name="time" type="time" placeholder="time" name="time">
+                    <input name="time" type="time" value="{{count($appointments) > 0? date('H:i', strtotime($appointment->time)):"" }}" placeholder="time">
+                    @error('time')
+        <h3 class="input-error" id="phone-error">{{$message}}</h3>
+    @enderror
                     <label for="date"></label>
-                    <input name="date" type="date" placeholder="Date">
+                    <input name="date" value="{{count($appointments) > 0? date('Y-m-d', strtotime($appointment->date)):"" }}" type="date" placeholder="Date">
+
+                    @error('date')
+        <h3 class="input-error" id="phone-error">{{$message}}</h3>
+    @enderror
                     <button type="submit" name="update_user" id="updateButton">Update</button>
                 </form>
                 
@@ -353,24 +372,38 @@
         </div>
 
         <div id="editUserInfo" class="edit-modal">
-            <div class="edit-modal-content">
+<div style="display: none">
+{{ $formattedDate = date('Y-m-d', strtotime($patient->birthdate))}}
+
+      </div>      <div class="edit-modal-content">
                 <span class="close-edit" id="close-user-info">&times;</span>
                 <h2>Edit Info</h2>
                 <form action="{{ route('updateUserInfo') }}" method="POST">
 @csrf
-<input type="hidden" name="mrn" value="{{ $mrn }}">
+{{-- <input type="hidden" name="mrn" value="{{ $mrn }}"> --}}
                     <label for=""></label>
+                  
                     <input type="text" id="editusername" name="username_input" placeholder="name">
+                    @error('username_input')
+         <h3 class="input-error" id="name-error">{{$message}}</h3>
+     @enderror
                     <label for=""></label>
                     <input type="text" id="edituseremail" name="email_input" placeholder="email">
+                    @error('email_input')
+            <h3 class="input-error" id="email-error">{{$message}}</h3>
+        @enderror
                     <label for=""></label>
-                    <input type="date" value="<?php 
-                    // echo $formattedDate ?>" id="edituserage" name="date_input"
+                    <input type="date" value="{{$formattedDate}}" id="edituserage" name="date_input"
                         placeholder="age">
-                    <label for=""></label>
+                        @error('date_input')
+                        <h3 class="input-error" id="email-error">{{$message}}</h3>
+                    @enderror
+                        <label for=""></label>
                     <input type="text" id="edituserfrom" name="address_input" placeholder="from">
 
-
+                    @error('address_input')
+                    <h3 class="input-error" id="email-error">{{$message}}</h3>
+                @enderror
                     <h3 class="changing-password pointer">change password</h3>
                     <button type="submit" name="edit_user" id="edit-user-info-button">Submit Info</button>
 
@@ -381,12 +414,20 @@
             <div class="edit-modal-content">
                 <span class="close-edit" id="close-change-password">&times;</span>
                 <h2>change the password</h2>
-                <form action="profile.php" method="POST">
+                <form action="{{route('updatePassword')}}" method="POST">
+@csrf
+    {{-- <input type="hidden" name="mrn" value="{{ $mrn }}"> --}}
 
-                    <label for=""></label>
+                    <label for="current_password"></label>
                     <input type="password" id="" name="current_password" placeholder="Current password">
-                    <label for=""></label>
+                    @error('current_password')
+        <h3 class="input-error" id="current-password-error">{{$message}}</h3>
+    @enderror
+                    <label for="new_password"></label>
                     <input type="password" id="" name="new_password" placeholder="New password ">
+                    @error('new_password')
+        <h3 class="input-error" id="current-password-error">{{$message}}</h3>
+    @enderror
 
 
 

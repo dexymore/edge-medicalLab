@@ -74,8 +74,8 @@
     });
   </script>
   <div class="signup-page">
-    <form action="./login.php" class="signup-form" name="POST" method="POST">
-
+    <form action="{{route("handleAdminLogin")}}" class="signup-form" name="POST" method="POST">
+@csrf
       <div class="form-container">
         <h1 class="signup-header">Login</h1>
         <h3 class="input-error" id="form-error">
@@ -83,9 +83,9 @@
             <?php //echo $error; ?>
           <?php //endif; ?>
         </h3>
-        <input type="text" placeholder="Email" id="email" name="email" />
+        <input type="text" placeholder="Email" id="email" name="email" value="{{old('email')}}" />
         <h3 class="input-error" id="email-error"></h3>
-        <input type="password" placeholder="Password" id="password" name="password" />
+        <input type="password" placeholder="Password" id="password" name="password" value="" />
         <h3 class="input-error" id="password-error"></h3>
         <button type="submit" id="submit" class="btn signup-form__btn" name="login" value="login">
           Submit

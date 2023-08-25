@@ -27,7 +27,13 @@
   margin-top: 20px;
   text-align: right;
 }
-
+.input-error {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  padding: 0 0.75rem;
+  height: 0.5rem;
+}
 .close {
   color: #aaa;
   float: right;

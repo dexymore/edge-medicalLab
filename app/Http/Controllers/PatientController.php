@@ -9,8 +9,30 @@ class PatientController extends Controller
 {
     public function index()
     {
-        return view('patientViews.index');
+        $mrn = session()->get('mrn');
+        $user = DB::table('users')->where('mrn', $mrn)->first();
+        $tests= DB::select("SELECT * FROM tests");
+        // Creating a new stdClass object to hold patient data
+        $patient = new \stdClass();
+        
+        // Checking if the user and mrn are valid before assigning values
+        if ($user) {
+            $patient->email = $user->email;
+            $patient->username = $user->username;
+            $patient->birthdate = $user->birthdate;
+            $patient->address = $user->address;
+        }
+        
+
+
+        if ($mrn || $patient) {
+            // Using the route() function instead of to_route()
+            return view('patientViews.index', ['patient' => $patient, 'mrn' => $mrn , 'tests'=>$tests]);
+        }
+        
+        return view('patientViews.index',['tests'=>$tests]);
     }
+    
     public function profile(){
    
          $mrn= session()->get('mrn');
@@ -44,35 +66,75 @@ class PatientController extends Controller
         return view('patientViews.profile',['patient'=>$patient , 'appointments'=>$appointments , 'reports'=>$reports,  'mrn'=>$mrn]);
     }
     public function updateUserInfo(Request $request){
+
+        $request->validate([
+            'username_input' => 'required',
+            'email_input' => 'required|email',
+           
+            'address_input' => 'required',
+            'date_input' => 'required|date|age_above:16',
+        ], [
+            'date_input.age_above' => 'You must be at least 16 years old to register.'
+        ]);
+        
+      
+     
+
+
+        
         $email = $request->input('email_input');
         $name= $request->input('username_input');
-        $mrn = $request->input('mrn');
-        $age = $request->input('age_input');
+        $mrn = session()->get('mrn');
+        $birthdate = $request->input('date_input');
         $address = $request->input('address_input');
-     $pateint = DB::table('users')->where('mrn',$mrn)->first();
-   $attributesChanged = $pateint->username !== $name ||
-                             $pateint->email !== $email ||
-                             $pateint->age !== $age ||
-                             $pateint->address !== $address;
-        if (!$attributesChanged) {
-            
-            return redirect()->route('profile', ['mrn' => $request->input('mrn')]);
-        }
+    
         DB::table('users')
         ->where('mrn', $mrn)
         ->update([
             'username' => $name,
             'email' => $email,
-            'age' => $age,
+            'birthdate' => $birthdate,
             'address' => $address
         ]);
-        return redirect()->route('profile', ['mrn' => $request->input('mrn')])
+        return to_route('profile')
                          ->with('success', 'User info updated successfully.');
         
     }
-    public function updatePassword(){
-        //
+    public function updatePassword(Request $request)
+    {
+   
+
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' =>  'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z]).+$/',
+        ], [
+            'old_password.required' => 'The old password field is required.',
+            'new_password.required' => 'The new password field is required.',
+            'new_password.min' => 'The new password must be at least 8 characters.',
+        ]);
+    
+        $currentPassword = $request->input('current_password');
+        $newPassword = $request->input('new_password');
+        $mrn = session()->get('mrn');
+
+        $user = DB::select("SELECT * FROM users WHERE mrn = ? ", [$mrn]);
+   
+        if ($user == null) {
+            return back()->with('error', 'Wrong email')->withInput();
+        }
+    
+        if (Hash::check($currentPassword, $user[0]->password)) {
+            $newHashedPassword = Hash::make($newPassword);
+            DB::update("UPDATE users SET password = ? WHERE mrn = ?", [$newHashedPassword, $mrn]);
+            return back()->with('success', 'Password updated successfully.');
+        } else {
+            return back()->with('error', 'Wrong password');
+        }
     }
+
+    
+
+    
     public function deleteAppointments(Request $request)
     {
         
@@ -81,18 +143,34 @@ class PatientController extends Controller
         // Delete the appointment using raw SQL query
         DB::delete("DELETE FROM appointments WHERE app_id = ?", [$app_id]);
     
-        return redirect()->route('profile', ['mrn' => $request->input('mrn')])
+        return to_route('profile')
                      ->with('success', 'Appointment deleted successfully.');
     }
 
     public function UpdateAppointments(Request $request)
     {
+
+request()->validate([
+    'date' => 'required|date|after_or_equal:today',
+    'time' => 'required',
+    'phone' => 'required|numeric',
+    'selected' => 'required',
+
+    'appointmentid' => 'required'
+], [
+    'date.after_or_equal' => 'The date must be after or equal to today.'
+]);
+        
+
         $app_id = $request->input('appointmentid');
         $date = $request->input('date');
         $time = $request->input('time');
         $phone = $request->input('phone');
         $testType = $request->input('selected');
-        $mrn = $request->input('mrn');
+        $mrn = session()->get('mrn');
+
+
+        
     
         // Retrieve the patient appointment once
         $patientAppointment = DB::table('appointments')
@@ -100,20 +178,10 @@ class PatientController extends Controller
             ->first();
     
         // Use the original appointment values if inputs are null
-        $date = $date ?? $patientAppointment->date;
-        $time = $time ?? $patientAppointment->time;
-    
-        // Check if any attributes have changed
-        $attributesChanged = $patientAppointment->date !== $date ||
-                             $patientAppointment->time !== $time ||
-                             $patientAppointment->phone_number !== $phone ||
-                             $testType != "0"; // Check if testType is not "0"
+
     
                              
-        if (!$attributesChanged) {
-            
-            return redirect()->route('profile', ['mrn' => $request->input('mrn')]);
-        }
+      
         if($testType == "0"){
             $testType = $patientAppointment->test_type;
         }
@@ -129,9 +197,42 @@ class PatientController extends Controller
                 'date' => $date
             ]);
     
-        return redirect()->route('profile', ['mrn' => $request->input('mrn')])
+            
+        return to_route('profile')
                          ->with('success', 'Appointment updated successfully.');
     }
+
+
+function makeAppointment(Request $request){
+    $request->validate([
+        'date' => 'required|date|after_or_equal:today',
+        'time' => 'required',
+        'phone' => 'required|numeric',
+        'selected' => 'required|integer|min:1|max:6', 
+    ], [
+        'date.after_or_equal' => 'The date must be after today.',
+        'selected.min' => 'Please select a valid Test Type.',
+        'selected.max' => 'Please select a valid Test Type.',
+    ]);
+    
+    
+    
+    $mrn= session()->get('mrn');
+    $date = request('date');
+    $time = request('time');
+    $phone = request('phone');
+    $testType = request('selected');
+    
+    
+    
+
+
+DB::insert("INSERT INTO appointments (mrn, date, time, phone_number, test_type) VALUES (?, ?, ?, ?, ?)", [$mrn, $date, $time, $phone, $testType]);
+    
+
+return to_route('profile');
+}
+    
     
     
 public function showSignup(){
@@ -142,17 +243,19 @@ public function showSignup(){
 public function handleSignup(Request $request){
 
 
-    $request->validate([
+   $validator= $request->validate([
         'username' => 'required',
         'email' => 'required|email|unique:users',
-        'password' => 'required|min:8',
+        'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z]).+$/',
+
         'address' => 'required',
         'date' => 'required|date|age_above:16',
     ], [
         'date.age_above' => 'You must be at least 16 years old to register.'
     ]);
-    
- 
+
+//  if($validator->fails()){
+//      return back()->with('error', 'Wrong password')->withInput();}
     
     $email= $request->input('email');
      $name = $request->input('username');

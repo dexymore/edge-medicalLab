@@ -102,8 +102,9 @@
             <?php
         //  endif; ?>
         </h3>
-        <?php 
-        // foreach ($users as $user) :  ?>
+        @foreach ($users as $user )
+            
+  
              <div class='row containerrow indgo'>
                 <div class="rowcontainer"></div>
                 <div class="rowheaders">
@@ -114,8 +115,7 @@
                                 MRN
                             </h3>
                             <h4 id="mrn">
-                                <?php 
-                                    // echo $user['mrn'] ?>
+                               {{$user->mrn}}
                             </h4>
                         </div>
                     </li>
@@ -125,8 +125,7 @@
                                 name
                             </h3>
                             <h4 id="name">
-                                <?php
-                                    //  echo $user['username'] ?>
+                               {{$user->username}}
                             </h4>
                         </div>
                     </li>
@@ -136,8 +135,7 @@
                                 email
                             </h3>
                             <h4 id="email">
-                                <?php
-                                    //  echo $user['email'] ?>
+                              {{$user->email}}
                             </h4>
                         </div>
                     </li>
@@ -147,19 +145,43 @@
                                 age
                             </h3>
                             <h4 id="phone">
-                                <?php
-                                    //  echo $user['age'] ?>
+                              {{$user->age}}
                             </h4>
                         </div>
                     </li>
                     <li>
-                   {{-- 
-<div class="rowButtons">
-    <div class="add add-report" id="actions-add-report" data-name="{{ $user['username'] }}" data-email="{{ $user['email'] }}" data-address="{{ $user['address'] }}" data-mrn="{{ $user['mrn'] }}"><img src="../assets/icons8-add-20.png"></div>
-    <div class="update" id="actions-update-user" data-date="{{ $user['birthdate'] }}" data-name="{{ $user['username'] }}" data-email="{{ $user['email'] }}" data-address="{{ $user['address'] }}" data-mrn="{{ $user['mrn'] }}"><img src="../assets/icons8-modify-20.png"></div>
-    <div class="delete" data-name="{{ $user['username'] }}" data-email="{{ $user['email'] }}" data-address="{{ $user['address'] }}" data-mrn="{{ $user['mrn'] }}"> <img src="../assets/icons8-delete-20.png"></div>
-</div>
---}}
+                   
+                        <div class="rowButtons">
+                            <div class="add add-report"
+                                 id="actions-add-report" 
+                                 data-name="{{ $user->username }}"
+                                     data-email="{{ $user->email }}"
+                                     data-address="{{ $user->address }}"
+                                     data-mrn="{{ $user->mrn }}" >
+                                
+                                <img src="{{ asset('assets/icons8-add-20.png') }}">
+                            </div>
+                            
+                            <div class="update"
+                                 id="actions-update-user"   data-date="{{ $user->birthdate }}"   data-name="{{ $user->username }}"     data-email="{{ $user->email }}"
+                                 data-address="{{ $user->address }}"
+                                 data-mrn="{{ $user->mrn }}">
+                            
+                 
+                                   
+                                <img src="{{ asset('assets/icons8-modify-20.png') }}">
+                            </div>
+                            
+                            <div class="delete"  data-name="{{ $user->username }}"
+                                data-email="{{ $user->email }}"
+                                data-address="{{ $user->address }}"
+                                data-mrn="{{ $user->mrn }}" >
+                               
+                                <img src="{{ asset('assets/icons8-delete-20.png') }}">
+                            </div>
+                        </div>
+                        
+
 
                     </li>
 
@@ -168,8 +190,7 @@
 
 
             </div>
-        <?php
-    //  endforeach; ?>
+      @endforeach
         <!-- <div class='row containerrow indgo'>
             <div class=" rowcontainer">
             </div>
@@ -414,28 +435,50 @@
         <div class="add-modal-content">
             <span class="close-add" id="close-add-appoint">&times;</span>
             <h2>add appointment</h2>
-            <form action="index.php" method="POST">
-                <input type="text" id="add-appointment__name" name="name" placeholder="name">
-                <input type="email" id="add-appointment__email" name="email" placeholder="email">
-                <input type="text" id="" name="phone" placeholder="phone">
+            <form action="{{route("addAppointment")}}" method="POST">
+                @csrf
+   
+                <input type="text" id="add-appointment__name" name="name" placeholder="name" disabled>
+                <input type="email" id="add-appointment__email" name="email" placeholder="email" disabled>
 
+
+                <input type="text" id="" name="phone" placeholder="phone">
+@error('phone')
+    <h3 class="input-error" id="name-error">
+        {{$message}}
+    </h3>
+    
+@enderror
 
                 <select class="select" name="selected">
                     <option value="0">Test Type:</option>
-                    <?php 
-                    // foreach ($tests as $test) : ?>
-                        <option value="<?php
-                        //  echo $test['test_id']; ?>">
-                            <?php
-                            //  echo $test['name']; ?>
-                        </option>
-                    <?php 
-                // endforeach; ?>
+                    @foreach ($tests as $test)
+                    <option value="{{ $test->test_id }}">
+                        {{ $test->name }}
+                    </option>
+                    @endforeach
                 </select>
+                @error('selected')
+                    <h3 class="input-error" id="name-error">
+                        {{$message}}
+                    </h3>
+                    
+                @enderror
                 <input name="time" type="time" placeholder="time" name="time">
-
+@error('time')
+    <h3 class="input-error" id="name-error">
+        {{$message}}
+    </h3>
+    @enderror
 
                 <input name="date" type="date" id="" placeholder=" Date">
+                @error('date')
+                <h3 class="input-error" id="name-error">
+                    {{$message}}
+                </h3>
+                @enderror
+
+
                 <input type="hidden" id="add-appointment__mrn" value="" name="user_mrn" placeholder="MRN">
                 <button type="submit" name="add_app" id="add-button">add appointment</button>
 
@@ -443,18 +486,18 @@
         </div>
     </div>
 
-
     <div id="deleteModal" class="modal">
-        <form action="index.php" method="POST" class="modal-content">
+        <form action="{{ route('deleteUser') }}" method="POST" class="modal-content">
+            @csrf
             <input type="hidden" id="delete_mrn_value" name="user_mrn" value="">
             <span class="close">&times;</span>
             <h3>Are you sure you want to delete this record?</h3>
             <div class="modal-buttons">
-
                 <button type="submit" name="delete_user" id="confirmButton">Delete</button>
             </div>
         </form>
     </div>
+    
     <!-- Add a button to trigger the modal -->
 
 
@@ -489,15 +532,44 @@
         <div class="update-modal-content">
             <span class="closeupdate">&times;</span>
             <h2>Update User</h2>
-            <form action="index.php" method="POST">
+            <form action="{{route("editUserInfo")}}" method="POST">
+                @csrf
                 <input type="hidden" id="update_mrn_value" name="user_mrn" value="">
+                @error('user_mrn')
+                    <h3 class="input-error" id="name-error">
+                        {{$message}}
+                    </h3>
+                    
+                @enderror
                 <label for="name"></label>
                 <input type="text" id="nameform" name="name" placeholder="name">
+                @error('name')
+                    <h3 class="input-error" id="name-error">
+                        {{$message}}
+                    </h3>
+                    
+                @enderror
                 <label for=" email"></label>
                 <input type="email" id="emailform" name="email" placeholder="email">
+                @error('email')
+                    <h3 class="input-error" id="email-error">
+                        {{$message}}
+                    </h3>
+                    @enderror
                 <label for="Address"></label>
                 <input type="text" id="address" name="address" placeholder="Address">
+                @error('address')
+                    <h3 class="input-error" id="address-error">
+                        {{$message}}
+                    </h3>
+
+                @enderror
                 <input type="date" id="date" placeholder="date" name="date" />
+                @error('date')
+                    <h3 class="input-error" id="date-error">
+                        {{$message}}
+                    </h3>
+                @enderror
                 <button type="submit" name="update_user" id="updateButton">Update</button>
             </form>
         </div>

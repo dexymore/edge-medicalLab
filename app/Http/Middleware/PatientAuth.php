@@ -16,7 +16,7 @@ class PatientAuth
     public function handle(Request $request, Closure $next): Response
     {
 if(session('mrn')===null){
-    return redirect()->route('login')->with('error', 'You must login first to access this page');
+    return redirect()->route('login')->with('error', 'You must login first to access this resource');
 }
 
         

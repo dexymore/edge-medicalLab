@@ -59,33 +59,30 @@
             // php endif; ?>
         </h3>
 
-        <?php
-        //  foreach ($appointments as $appointment) : ?>
+        @foreach ($appointments as $appointment)
         <div class='row containerrow indgo' data-id="<?php 
         // echo $appointment['app_id'] ?>">
 
 
             <div class=" rowheaders">
 
-                <li>
+                {{-- <li>
                     <div class="rowItem">
                         <h3>
                             id
                         </h3>
                         <h4>
-                            <?php 
-                                // echo $appointment['app_id'] ?>
+                           {{$appointment->app_id}}
                         </h4>
                     </div>
-                </li>
+                </li> --}}
                 <li>
                     <div class="rowItem">
                         <h3>
                             name
                         </h3>
                         <h4 id="appointname">
-                            <?php
-                                //  echo $appointment['user_name'] ?>
+                            {{$appointment->user_name}}
                         </h4>
                     </div>
                 </li>
@@ -96,19 +93,7 @@
                             type
                         </h3>
                         <h4>
-                            <?php 
-                                // echo $appointment['test_name'] ?>
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            date
-                        </h3>
-                        <h4 id="appointemail">
-                            <?php
-                                //  echo $appointment['date'] ?>
+                            {{$appointment->test_name}}
                         </h4>
                     </div>
                 </li>
@@ -118,8 +103,18 @@
                             email
                         </h3>
                         <h4 id="appointemail">
-                            <?php
-                                //  echo $appointment['email'] ?>
+                            {{$appointment->email}}
+                        </h4>
+                    </div>
+                </li>
+                <li>
+                    <div class="rowItem">
+                        <h3>
+                            date
+                        </h3>
+                        <h4 id="">
+                            {{$appointment->date}}
+                     
                         </h4>
                     </div>
                 </li>
@@ -130,8 +125,7 @@
                             appointment-id
                         </h3>
                         <h4 id="appointid">
-                            <?php 
-                                // echo $appointment['app_id'] ?>
+                            {{$appointment->app_id}}
                         </h4>
                     </div>
                 </li>
@@ -141,25 +135,22 @@
                             MRN
                         </h3>
                         <h4 id="appointuserid">
-                            <?php 
-                                // echo $appointment['mrn'] ?>
+                            {{$appointment->mrn}}
                         </h4>
                     </div>
                 </li>
                 <li>
-                    <div class=" rowButtons">
-                        <div class="update-appoint" data-id="<?php 
-                            // echo $appointment['app_id'] ?>"
-                            data-mrn="<?php 
-                                // echo $appointment['mrn'] ?>"
-                            data-phone="<?php 
-                            // echo $appointment['phone_number'] ?>"><img
-                                src={{ asset('/assets/icons8-modify-20.png') }}></div>
-                        <div class="delete" data-id="<?php
-                        //  echo $appointment['app_id'] ?>">
-                            <img src={{asset("/assets/icons8-delete-20.png")}}>
+                    <div class="rowButtons">
+                        <div class="update-appoint" data-id="{{$appointment->app_id}}"
+                             data-mrn="{{$appointment->mrn}}"
+                             data-phone="{{$appointment->phone_number}}">
+                            <img src="{{ asset('/assets/icons8-modify-20.png') }}">
+                        </div>
+                        <div class="delete" data-id="{{$appointment->app_id}}">
+                            <img src="{{ asset('/assets/icons8-delete-20.png') }}">
                         </div>
                     </div>
+                    
                 </li>
 
             </div>
@@ -167,8 +158,7 @@
 
 
         </div>
-        <?php 
-    // endforeach; ?>
+     @endforeach
         <!-- <div class='row containerrow indgo'>
 
 
@@ -399,12 +389,12 @@
         <div class="update-modal-content">
             <span class="close-update-appoint">&times;</span>
             <h2>Update appointment</h2>
-            <form action="appointments.php" method="POST">
+            <form action="{{route('updateUserAppointment')}}" method="POST">
                 <label for="appointnameform"></label>
-                <input type="text" name="name" id="appointnameform" placeholder="name">
+                <input type="text" name="name" id="appointnameform" placeholder="name" disabled>
                 <label for="appointUserIdform"></label>
                 <label for="appointIDform"></label>
-                <input type="email" id="appointEmailform" name="email" placeholder="email">
+                <input type="email" id="appointEmailform" name="email" placeholder="email" disabled>
                 <input type="text" id="phone" name="phone" placeholder="phone">
 
                 <label for=" appointEmailform"></label>
@@ -423,7 +413,7 @@
 
 
                 <label for="date"></label>
-                <input name="date" type="date" id="testdateform" placeholder=" Date">
+                <input name="date" type="date" id="testdateform" placeholder=" Date" value="">
 
                 <input type="hidden" id="update-appointment__mrn" value="" name="user_mrn" placeholder="MRN">
                 <input type="hidden" id="update-appointment__id" value="" name="app_id" placeholder="MRN">
@@ -449,116 +439,116 @@
 <!-- update appointments -->
 
 <script defer>
-// Get the update modal element
-let updateAppointModal = document.querySelector("#updateappointModal");
+    // Get the update modal element
+    let updateAppointModal = document.querySelector("#updateappointModal");
 
-// Get all the update buttons
-let updateAppointButtons = document.querySelectorAll('.update-appoint');
+    // Get all the update buttons
+    let updateAppointButtons = document.querySelectorAll('.update-appoint');
 
-// Get the close button element
-let closeupdateappoint = updateAppointModal.querySelector(".close-update-appoint");
+    // Get the close button element
+    let closeupdateappoint = updateAppointModal.querySelector(".close-update-appoint");
 
-// Get the update button element
-let updatappointButton = updateAppointModal.querySelector("#updateAppointButton");
+    // Get the update button element
+    let updatappointButton = updateAppointModal.querySelector("#updateAppointButton");
 
-let appointrow = "";
+    let appointrow = "";
 
-// When the user clicks on an update button, open the update modal
-updateAppointButtons.forEach(function(updatappointButton) {
-    updatappointButton.addEventListener("click", function() {
-        updateAppointModal.style.display = "block";
-        // Set the row to update as the parent of the clicked button
-        let appointRowToUpdate = updatappointButton.parentNode.parentNode.parentNode;
+    // When the user clicks on an update button, open the update modal
+    updateAppointButtons.forEach(function(updatappointButton) {
+        updatappointButton.addEventListener("click", function() {
+            updateAppointModal.style.display = "block";
+            // Set the row to update as the parent of the clicked button
+            let appointRowToUpdate = updatappointButton.parentNode.parentNode.parentNode;
 
-        // Set the input values to the current row values
-        let emailInput = updateAppointModal.querySelector("#appointEmailform");
-        let appointIdInput = updateAppointModal.querySelector("#appointIdform");
-        let userid = updateAppointModal.querySelector("#appointUserIdform");
-        let appointusername = updateAppointModal.querySelector("#appointnameform");
+            // Set the input values to the current row values
+            let emailInput = updateAppointModal.querySelector("#appointEmailform");
+            let appointIdInput = updateAppointModal.querySelector("#appointIdform");
+            let userid = updateAppointModal.querySelector("#appointUserIdform");
+            let appointusername = updateAppointModal.querySelector("#appointnameform");
 
-        emailInput.value = appointRowToUpdate.querySelector("#appointemail").textContent.trim();
-        appointusername.value = appointRowToUpdate.querySelector("#appointname").textContent.trim();
-        document.getElementById('update-appointment__mrn').value = updatappointButton.dataset.mrn;
-        document.getElementById('update-appointment__id').value = updatappointButton.dataset.id;
-        document.getElementById('phone').value = updatappointButton.dataset.phone
-        // Store the row to update and the update button as properties of the update button
-        appointrow = appointRowToUpdate;
+            emailInput.value = appointRowToUpdate.querySelector("#appointemail").textContent.trim();
+            appointusername.value = appointRowToUpdate.querySelector("#appointname").textContent.trim();
+            document.getElementById('update-appointment__mrn').value = updatappointButton.dataset.mrn;
+            document.getElementById('update-appointment__id').value = updatappointButton.dataset.id;
+            document.getElementById('phone').value = updatappointButton.dataset.phone
+            // Store the row to update and the update button as properties of the update button
+            appointrow = appointRowToUpdate;
+        });
     });
-});
 
 
-// When the user clicks on the close button, close the update modal
-closeupdateappoint.onclick = function() {
-    document.querySelector("#updateappointModal").
-    style.display = "none";
-};
+    // When the user clicks on the close button, close the update modal
+    closeupdateappoint.onclick = function() {
+        document.querySelector("#updateappointModal").
+        style.display = "none";
+    };
 
-// When the user clicks outside the update modal, close it
-window.addEventListener("click", function(event) {
-    if (event.target == updateAppointModal) {
+    // When the user clicks outside the update modal, close it
+    window.addEventListener("click", function(event) {
+        if (event.target == updateAppointModal) {
+            updateAppointModal.style.display = "none";
+        }
+    });
+
+    // When the user clicks on the update button, update the row and close the update modal
+    updatappointButton.addEventListener("click", function() {
+
+        // Update the row here
+
+
+
+
+        let emailvalue = document.getElementById("appointEmailform").value;
+        let appointId = document.getElementById("appointIdform").value;
+        let userid = document.getElementById("appointUserIdform").value;
+        let nameValue = document.getElementById("appointnameform").value
+        // Update the text content of an element with ID "name" inside a row element
+
+        appointrow.querySelector("#appointemail").textContent = emailvalue;
+
+        appointrow.querySelector("#appointid").textContent = appointId;
+        appointrow.querySelector("#appointname").textContent = nameValue
+
+        appointrow.querySelector("#appointuserid").textContent = userid;
         updateAppointModal.style.display = "none";
-    }
-});
-
-// When the user clicks on the update button, update the row and close the update modal
-updatappointButton.addEventListener("click", function() {
-
-    // Update the row here
-
-
-
-
-    let emailvalue = document.getElementById("appointEmailform").value;
-    let appointId = document.getElementById("appointIdform").value;
-    let userid = document.getElementById("appointUserIdform").value;
-    let nameValue = document.getElementById("appointnameform").value
-    // Update the text content of an element with ID "name" inside a row element
-
-    appointrow.querySelector("#appointemail").textContent = emailvalue;
-
-    appointrow.querySelector("#appointid").textContent = appointId;
-    appointrow.querySelector("#appointname").textContent = nameValue
-
-    appointrow.querySelector("#appointuserid").textContent = userid;
-    updateAppointModal.style.display = "none";
-});
+    });
 </script>
 
 <script>
-// Get the modal element
-let modal = document.getElementById("deleteModal");
+    // Get the modal element
+    let modal = document.getElementById("deleteModal");
 
-// Get all the delete buttons
-let deleteButtons = document.querySelectorAll('.delete');
+    // Get all the delete buttons
+    let deleteButtons = document.querySelectorAll('.delete');
 
-// Get the cancel button element
-let cancelButton = document.getElementById("cancelButton");
+    // Get the cancel button element
+    let cancelButton = document.getElementById("cancelButton");
 
-// Get the confirm button element
-let confirmButton = document.getElementById("confirmButton");
+    // Get the confirm button element
+    let confirmButton = document.getElementById("confirmButton");
 
-let closeButton = document.querySelector(".close");
+    let closeButton = document.querySelector(".close");
 
-let deleteIdInput = document.querySelector("#delete_id_input");
-// When the user clicks on a delete button, open the modal
-deleteButtons.forEach(function(deleteButton) {
-    deleteButton.addEventListener("click", function() {
-        deleteIdInput.value = deleteButton.dataset.id;
-        modal.style.display = "block";
-        // Set the row to delete as the parent of the clicked button
-        let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
-        // Store the row to delete as a property of the confirm button
-        confirmButton.rowToDelete = rowToDelete;
+    let deleteIdInput = document.querySelector("#delete_id_input");
+    // When the user clicks on a delete button, open the modal
+    deleteButtons.forEach(function(deleteButton) {
+        deleteButton.addEventListener("click", function() {
+            deleteIdInput.value = deleteButton.dataset.id;
+            modal.style.display = "block";
+            // Set the row to delete as the parent of the clicked button
+            let rowToDelete = deleteButton.parentNode.parentNode.parentElement.parentElement;
+            // Store the row to delete as a property of the confirm button
+            confirmButton.rowToDelete = rowToDelete;
+        });
     });
-});
 
-// When the user clicks on the close button, close the modal
-closeButton.onclick = function() {
-    modal.style.display = "none";
-}
-window.addEventListener("click", function(event) {
-    if (event.target == modal) {
+    // When the user clicks on the close button, close the modal
+    closeButton.onclick = function() {
         modal.style.display = "none";
     }
-});
+    window.addEventListener("click", function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
 </script>

@@ -158,3 +158,48 @@ section h1 {
 /* #users{
   min-height: 100vh;
 } */
+.navbar {
+  width: 100%;
+  /* background: var(--zinc-200); */
+  background-color: #fff;
+  position: fixed;
+  z-index: 10;
+  height: 6rem;
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04))
+    drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+  font-size: 1rem;
+}
+
+.navbar-container {
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar-mobile {
+  background-color: var(--zinc-200);
+  position: absolute;
+  width: 100%;
+  padding: 0rem 2rem;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+.navbar-mobile__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.input-error {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  padding: 0 0.75rem;
+  height: 0.5rem;
+}
+.navbar-mobile__list li {
+  border-bottom: 2px solid rgb(199, 199, 200);
+  padding: 8px 0;
+  width: 100%;
+}

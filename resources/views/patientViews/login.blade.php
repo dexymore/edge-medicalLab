@@ -110,16 +110,30 @@
 @csrf
       <div class="form-container">
         <h1 class="signup-header">Login</h1>
-        @if(session('error'))
+        @if (session('error'))
         <h3 class="input-error" id="form-error">
             {{ session('error') }}
         </h3>
     @endif
     
+    
         <input type="text" placeholder="Email" id="email" name="email" value="{{old('email')}}" />
+        @error('email')
+          <h3 class="input-error" id="email-error">
+            {{$message}}
+          </h3>
+          
+        @enderror
         <h3 class="input-error" id="email-error"></h3>
         <input type="password" placeholder="Password" id="password" name="password" />
-        <h3 class="input-error" id="password-error"></h3>
+        @error('password')
+          <h3 class="input-error" id="password-error">
+            {{$message}}
+          </h3>
+          
+        @enderror
+        
+
         <button type="submit" id="submit" class="btn signup-form__btn" name="login" value="Login">
           Submit
         </button>
