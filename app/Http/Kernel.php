@@ -68,6 +68,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'PatientAuth' => \App\Http\Middleware\PatientAuth::class,
         'GuestPatientAuth' => \App\Http\Middleware\GuestPatientAuth::class,
+        'AdminAuth' => \App\Http\Middleware\AdminAuth::class,
+        'GeustAdminAuth' => \App\Http\Middleware\GeustAdminAuth::class,
         
     ];
 }

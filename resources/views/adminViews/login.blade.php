@@ -77,7 +77,12 @@
     <form action="{{route("handleAdminLogin")}}" class="signup-form" name="POST" method="POST">
 @csrf
       <div class="form-container">
-        <h1 class="signup-header">Login</h1>
+        <h1 class="signup-header">Admin Login</h1>
+        <h3 class="input-error" id="form-error">
+          @if ($errors->any())
+              {{ $errors->first() }}
+          @endif
+      </h3>
         <h3 class="input-error" id="form-error">
           <?php //if (!empty($error)) : ?>
             <?php //echo $error; ?>

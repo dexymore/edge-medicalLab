@@ -50,25 +50,33 @@ Route::group(['middleware'=>'GuestPatientAuth'],function(){
 
 ///admin routes
 
-Route::get('/adminLogin',[AdminController::class,'showAdminLogin'])->name('adminLogin');
+
+Route::group(['middleware'=>'GeustAdminAuth'],function(){
+    Route::get('/adminLogin',[AdminController::class,'showAdminLogin'])->name('adminLogin'); 
 Route::post('/handleAdminLogin',[AdminController::class,'handleAdminLogin'])->name('handleAdminLogin');
+});
 
-
+Route::group(['middleware'=>'AdminAuth'],function(){
+   
+Route::get('logoutAdmin',[AdminController::class,'logoutAdmin'])->name('logoutAdmin');
 Route::get('/adminProfile',[AdminController::class,'adminProfile'])->name('adminProfile');
 Route::post('/deleteUser',[AdminController::class,'deleteUser'])->name('deleteUser');
 Route::post('/editUserInfo',[AdminController::class,'editUserInfo'])->name('editUserInfo');
 Route::post('/addAppointment',[AdminController::class,'addAppointment'])->name('addAppointment');
 Route::get('/adminAppoinments',[AdminController::class,'adminAppoinments'])->name('adminAppoinments');
-Route::post('updateUserAppointment',[AdminController::class,'updateUserAppointment'])->name('updateUserAppointment');
+Route::post('/updateUserAppointment',[AdminController::class,'updateUserAppointment'])->name('updateUserAppointment');
+Route::post('/deleteUserAppointment',[AdminController::class,'deleteUserAppointment'])->name('deleteUserAppointment');
+Route::get('/adminReports',[AdminController::class,'adminReports'])->name('adminReports');
 
-
-
-
-
-
-Route::get('/reports', function () {
-    return view('adminViews/reports');
 });
+
+
+
+
+
+// Route::get('/reports', function () {
+//     return view('adminViews/reports');
+// });
 
 // Route::get('/loginAdmin', function () {
 //     return view('adminViews/login');

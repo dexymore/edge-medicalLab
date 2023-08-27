@@ -5,14 +5,14 @@
             <div class=" nav-list-container">
                 <ul class="nav-list ">
                     <li><a href="/adminProfile"> Users</a></li>
-                    <li><a href="/reports">Reports</a></li>
+                    <li><a href="/adminReports">Reports</a></li>
                     <li><a href="/adminAppoinments ">Apointments</a></li>
 
                 </ul>
             </div>
         </div>
         <div class="navbar-right ">
-            <a class="btn sign-in" href="logout.php">log out</a>
+            <a class="btn sign-in" href="{{route("logoutAdmin")}}">log out</a>
 
         </div>
 </nav>

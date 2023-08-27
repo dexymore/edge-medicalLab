@@ -527,6 +527,8 @@
         </div>
     </div>
 
+    
+
     <!-- The update modal form -->
     <div id="updateUserModal" class="update-modal">
         <div class="update-modal-content">

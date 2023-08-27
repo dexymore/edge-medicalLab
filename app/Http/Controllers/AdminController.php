@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -89,7 +90,7 @@ public function addAppointment(Request $request)
     $request->validate([
     'date' => 'required|date|after_or_equal:today',
     'time' => 'required',
-    'phone' => 'required|numeric',
+    'phone' => 'required|numeric|digits:11',
     'selected' => 'required|integer|min:1|max:6', 
 ], [
     'date.after_or_equal' => 'The date must be after today.',
@@ -123,38 +124,95 @@ public function adminAppoinments()
 ');
 
 
+
     return view('adminViews.appointments',['appointments'=>$appointments]);
     
 }
 
-// public function updateUserAppointment(Request $request){
-//     request()->validate([
-//         'date' => 'required|date|after_or_equal:today',
-//         'time' => 'required',
-//         'phone' => 'required|numeric',
-//         'selected' => 'required|integer|min:1|max:6',
-    
-//         'appointmentid' => 'required'
-//     ], [
-//         'date.after_or_equal' => 'The date must be after or equal to today.'
-//     ]);
-    
-//     $date = request('date');
-//     $time = request('time');
-//     $phone = request('phone');
-//     $testType = request('selected');
-//     $app_id = request('appointmentid');
-//     $mrn = request('mrn');
-    
-// DB::update("UPDATE appointments SET date=?, time=?, phone_number=?, test_type=? WHERE app_id=? AND mrn=?", [$date, $time, $phone, $testType, $app_id, $mrn]);
-    
-//     return back()->with('success', 'Appointment updated successfully.');
+public function updateUserAppointment(Request $request){
+
+    request()->validate([
+        'date' => 'required|date|after_or_equal:today',
+        'time' => 'required',
+        'phone' => 'required|numeric|digits:11',
+        'selected' => 'required|integer',
+    'user_mrn'=>'required',
+        'app_id' => 'required'
+    ], [
+        'date.after_or_equal' => 'The date must be after or equal to today.'
+    ]);
     
     
-// }
+    $date = $request->input('date');
+    $time = $request->input('time');
+    $phone = $request->input('phone');
+    $testType = $request->input('selected');
+    $app_id = $request->input('app_id');
+    $mrn = $request->input('user_mrn');
+    
+    $patientAppointment = DB::table('appointments')
+            ->where('app_id', $app_id)
+            ->first();
+    
+        // Use the original appointment values if inputs are null
+
+    
+                             
+      
+        if($testType == "0"){
+            $testType = $patientAppointment->test_type;
+        }
+    
+
+    
+DB::update("UPDATE appointments SET date=?, time=?, phone_number=?, test_type=? WHERE app_id=? AND mrn=?", [$date, $time, $phone, $testType, $app_id, $mrn]);
+    
+    return back()->with('success', 'Appointment updated successfully.');
+    
+    
+}
+
+public function deleteUserAppointment(Request $request)
+{
+    $request->validate([
+        'app_id'=>'required'
+    ]);
+
+    $app_id=$request->app_id;   
+
+    DB::delete('delete from appointments where app_id=?',[$app_id]);
+    return back()->with('success','Appointment deleted successfully');
+
+   
+}
+
+public function adminReports(){
+    if (!session()->has('id')) {
+        return redirect()->route('adminLogin');
+    }
+    $reports = DB::select(' SELECT r.report_id, r.url,r.appointment_id, u.username, u.email, u.mrn, a.date, a.time, a.phone_number,t.test_id, t.name AS test_name
+    FROM reports r
+    JOIN users u ON r.mrn = u.mrn
+    JOIN appointments a ON r.appointment_id = a.app_id
+    JOIN tests t ON a.test_type = t.test_id
+    ');
+
+    return view('adminViews.reports',['reports'=>$reports]);
+}
 
 
-public function logout()
+
+
+
+
+public function uploadFile  (Request $request){
+
+
+    
+    
+}
+
+public function logoutAdmin()
 {
     session()->invalidate();
     return redirect()->route('adminLogin');}

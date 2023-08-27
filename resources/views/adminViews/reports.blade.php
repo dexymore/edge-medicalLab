@@ -63,8 +63,9 @@
             <?php 
         // endif; ?>
         </h3>
-        <?php 
-        // foreach ($reports as $report) : ?>
+    @foreach ($reports as $report )
+        
+
             <div class='row containerrow indgo '>
                 <div class="rowheaders">
 
@@ -74,8 +75,7 @@
                                 id
                             </h3>
                             <h4>
-                                <?php 
-                                    // echo $report['report_id']; ?>
+                               {{$report->report_id}}
                             </h4>
                         </div>
                     </li>
@@ -85,8 +85,7 @@
                                 name
                             </h3>
                             <h4 id="testname">
-                                <?php
-                                    //  echo $report['username']; ?>
+                                {{$report->username}}
                             </h4>
                         </div>
                     </li>
@@ -96,8 +95,7 @@
                                 date
                             </h3>
                             <h4 id="testdate">
-                                <?php
-                                    //  echo $report['date']; ?>
+                                {{$report->date}}
                             </h4>
                         </div>
                     </li>
@@ -107,8 +105,7 @@
                                 type
                             </h3>
                             <h4 id="testtype">
-                                <?php
-                                    //  echo $report['test_name']; ?>
+                                {{$report->test_name}}
                             </h4>
                         </div>
                     </li>
@@ -118,8 +115,7 @@
                                 email
                             </h3>
                             <h4 id="testemail">
-                                <?php
-                                    //  echo $report['email']; ?>
+                                {{$report->email}}
                             </h4>
                         </div>
                     </li>
@@ -129,8 +125,7 @@
                                 phone
                             </h3>
                             <h4 id="testphone">
-                                <?php
-                                    //  echo $report['phone_number']; ?>
+                                {{$report->phone_number}}
                             </h4>
                         </div>
                     </li>
@@ -140,33 +135,27 @@
                                 MRN
                             </h3>
                             <h4 id="testuserId">
-                                <?php 
-                                    // echo $report['mrn']; ?>
+                                {{$report->mrn}}
                             </h4>
                         </div>
                     </li>
                     <li>
 
                         <div class=" rowButtons">
-                            <a class="view pointer" href="./view.php?url=<?php
-                                //  echo $report['url'] ?>" target="_blank"> <img src={{asset("/assets/icons8-file-24.png")}}></a>
-                            <div class="update-test pointer" data-app="<?php 
-                            // echo $report['appointment_id'] ?>" data-mrn="<?php 
-                            // echo $report['mrn'] ?>" 
-                            data-test="<?php
-                            //  echo $report['test_id'] ?>" 
-                            data-url="<?php
-                            //  echo $report['url'] ?>" data-id="<?php // echo $report['report_id'] ?>">
+                            <a class="view pointer" href="./view.php?url={{$report->url}}" target="_blank"> <img src="{{asset("/assets/icons8-file-24.png")}}"></a>
+                            <div class="update-test pointer" data-app="{{$report->appointment_id}}" data-mrn="{{$report->mrn}}" 
+                            data-test="{{$report->test_id}}}}" 
+                            data-url="{{$report->url}}" data-id="{{$report->report_id}}">
                                 <img src=" {{asset("/assets/icons8-modify-20.png")}}">
                             </div>
-                            <div class="delete pointer" data-url="<?php //echo $report['url'] ?>" data-id="<?php// echo $report['report_id'] ?>"> <img src="{{asset("/assets/icons8-delete-20.png")}}"></div>
+                            <div class="delete pointer" data-url=" {{$report->url}}" data-id="{{$report->report_id}}"> <img src="{{asset("/assets/icons8-delete-20.png")}}"></div>
                         </div>
                     </li>
 
 
                 </div>
             </div>
-        <?php //endforeach; ?>
+            @endforeach
         <!-- <div class='row containerrow indgo '>
 
             <div class=" rowcontainer">

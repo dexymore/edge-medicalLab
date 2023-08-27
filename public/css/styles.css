@@ -1771,3 +1771,47 @@ html .pricing {
 .navbar-admin .navbar-left {
   justify-content: flex-start;
 }
+.error-panner {
+  background-color: #ff0000;
+  border-radius: 0.375rem;
+  text-align: center;
+  color: #ffffff;
+  font-family: 'Abel', sans-serif;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  gap: 0.5rem;
+}
+
+.error-panner > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-panner svg {
+  fill: #ffffff;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.error-panner h3 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.error-panner button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.error-panner button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: #ffffff;
+  justify-self: end;
+}

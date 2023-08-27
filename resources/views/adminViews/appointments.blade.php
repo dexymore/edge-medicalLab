@@ -112,13 +112,34 @@
                         <h3>
                             date
                         </h3>
-                        <h4 id="">
+                        <h4 id="appointmentDate">
                             {{$appointment->date}}
                      
                         </h4>
                     </div>
                 </li>
-
+                
+                <li>
+                    <div class="rowItem">
+                        <h3>
+                            time
+                        </h3>
+                        <h4 id="appointmentTime">
+                            {{$appointment->time}}
+                        </h4>
+                    </div>
+                </li>
+                <li>
+                    <div class="rowItem">
+                        <h3>
+                            phone
+                        </h3>
+                        <h4 id="appointmentPhone">
+                            {{$appointment->phone_number}}
+                     
+                        </h4>
+                    </div>
+                </li>
                 <li>
                     <div class="rowItem">
                         <h3>
@@ -129,7 +150,8 @@
                         </h4>
                     </div>
                 </li>
-                <li>
+               
+                {{-- <li>
                     <div class=" rowItem">
                         <h3>
                             MRN
@@ -138,7 +160,7 @@
                             {{$appointment->mrn}}
                         </h4>
                     </div>
-                </li>
+                </li> --}}
                 <li>
                     <div class="rowButtons">
                         <div class="update-appoint" data-id="{{$appointment->app_id}}"
@@ -390,6 +412,7 @@
             <span class="close-update-appoint">&times;</span>
             <h2>Update appointment</h2>
             <form action="{{route('updateUserAppointment')}}" method="POST">
+                @csrf
                 <label for="appointnameform"></label>
                 <input type="text" name="name" id="appointnameform" placeholder="name" disabled>
                 <label for="appointUserIdform"></label>
@@ -409,11 +432,11 @@
                     <option value="6">Immunologists</option>
                 </select>
                 <label for="time"></label>
-                <input name="time" type="time" placeholder="time" name="time">
+                <input name="time" type="time" placeholder="time" id='appointmentTimeForm' name="time" value="">
 
 
                 <label for="date"></label>
-                <input name="date" type="date" id="testdateform" placeholder=" Date" value="">
+                <input name="date" type="date" id="appointmentDateForm" placeholder=" Date" value="">
 
                 <input type="hidden" id="update-appointment__mrn" value="" name="user_mrn" placeholder="MRN">
                 <input type="hidden" id="update-appointment__id" value="" name="app_id" placeholder="MRN">
@@ -424,7 +447,8 @@
     </div>
 
     <div id="deleteModal" class="modal">
-        <form action="appointments.php" method="POST" class="modal-content">
+        <form action="{{route("deleteUserAppointment")}}" method="POST" class="modal-content">
+            @csrf
             <input type="hidden" id="delete_id_input" name="app_id" value="">
             <span class="close">&times;</span>
             <h3>Are you sure you want to delete this record?</h3>
@@ -465,12 +489,20 @@
             let appointIdInput = updateAppointModal.querySelector("#appointIdform");
             let userid = updateAppointModal.querySelector("#appointUserIdform");
             let appointusername = updateAppointModal.querySelector("#appointnameform");
+            let appointdate = updateAppointModal.querySelector("#appointmentDateForm");
+            let appointtime = updateAppointModal.querySelector("#appointmentTimeForm");
 
             emailInput.value = appointRowToUpdate.querySelector("#appointemail").textContent.trim();
             appointusername.value = appointRowToUpdate.querySelector("#appointname").textContent.trim();
             document.getElementById('update-appointment__mrn').value = updatappointButton.dataset.mrn;
             document.getElementById('update-appointment__id').value = updatappointButton.dataset.id;
             document.getElementById('phone').value = updatappointButton.dataset.phone
+            // appointIdInput.value = appointRowToUpdate.querySelector("#appointid").textContent.trim();
+            // userid.value = appointRowToUpdate.querySelector("#appointuserid").textContent.trim();
+            appointdate.value = appointRowToUpdate.querySelector("#appointmentDate").textContent.trim();
+            appointtime.value = appointRowToUpdate.querySelector("#appointmentTime").textContent.trim();
+      
+            console.log(appointdate.value,appointtime.value);
             // Store the row to update and the update button as properties of the update button
             appointrow = appointRowToUpdate;
         });

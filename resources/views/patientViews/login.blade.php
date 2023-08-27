@@ -109,7 +109,7 @@
     <form action="{{route('handleLogin')}}" class="signup-form" name="POST" method="POST">
 @csrf
       <div class="form-container">
-        <h1 class="signup-header">Login</h1>
+        <h1 class="signup-header">User Login</h1>
         @if (session('error'))
         <h3 class="input-error" id="form-error">
             {{ session('error') }}

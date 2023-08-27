@@ -153,7 +153,7 @@ class PatientController extends Controller
 request()->validate([
     'date' => 'required|date|after_or_equal:today',
     'time' => 'required',
-    'phone' => 'required|numeric',
+    'phone' => 'required|numeric|digits:11',
     'selected' => 'required',
 
     'appointmentid' => 'required'
@@ -207,7 +207,7 @@ function makeAppointment(Request $request){
     $request->validate([
         'date' => 'required|date|after_or_equal:today',
         'time' => 'required',
-        'phone' => 'required|numeric',
+        'phone' => 'required|numeric|digits:11',
         'selected' => 'required|integer|min:1|max:6', 
     ], [
         'date.after_or_equal' => 'The date must be after today.',
@@ -280,6 +280,15 @@ return to_route('profile');
     }
 
     public function handleLogin(Request $request){
+        
+$request.validator(
+    [
+        'email'=>'required',
+    
+        'password'=>'required'
+    ]
+);
+        
     $email = $request->input('email');
     $password = $request->input('password');
     
@@ -308,6 +317,8 @@ return to_route('index');
 
     
 }
+
+
 
     
     public function viewDocument($url){
