@@ -1,52 +1,5 @@
-<?php
-// require_once __DIR__ . '/../db/admin.php';
-// session_start();
-// if (!isset($_SESSION['admin'])) {
-//     header('location:login.php');
-//     exit;
-// }
-// $reports = fetchReports();
-// if (isset($_POST['delete_report'])) {
-//     $report_id = $_POST['user_report_id'];
-//     $report_url = $_POST['user_report_url'];
-//     deleteReport($report_id, $report_url);
-//     $reports = fetchReports();
-// }
-// // print_r($reports)
-
-// if (isset($_POST['update-report'])) {
-//     // print_r($_POST);
-//     $mrn = $_POST['mrn'];
-//     $test_id = $_POST['selected'];
-//     $report_id = $_POST['report_id'];
-//     $tempUrl = $_POST['temp_url'];
-//     $appId = $_POST['app_id'];
-//     $file = $_FILES['report-file'];
-//     if (empty($mrn) || empty($test_id) || empty($report_id) || empty($tempUrl) || empty($appId)) {
-//         $error = "Missing credentials";
-//     }
-//     if ($file['size'] == 0) {
-//         $error = "Missing credentials";
-//     }
-//     if (empty($error)) {
-//         updateReport($mrn, $test_id, $report_id, $tempUrl, $appId, $file);
-//         $reports = fetchReports();
-//     }
-// }
-
-// $conn = db_connect();
-// $sql = "SELECT test_id, name FROM tests";
-
-// $stmt = mysqli_prepare($conn, $sql);
-// mysqli_stmt_execute($stmt);
-// $result = mysqli_stmt_get_result($stmt);
-// $tests = mysqli_fetch_all($result, MYSQLI_ASSOC);
-// mysqli_stmt_close($stmt);
-// mysqli_close($conn);
-?>
 @extends('_base')
 @section('dynamic-css')
-<link rel="stylesheet" href={{asset("/css/adminstyles.css")}} />
 @endsection
 <body>
     @include('components.adminNavbar')
@@ -142,7 +95,7 @@
                     <li>
 
                         <div class=" rowButtons">
-                            <a class="view pointer" href="./view.php?url={{$report->url}}" target="_blank"> <img src="{{asset("/assets/icons8-file-24.png")}}"></a>
+                            <a class="view pointer" href="./view-document/{{$report->url}}" target="_blank"> <img src="{{asset("/assets/icons8-file-24.png")}}"></a>
                             <div class="update-test pointer" data-app="{{$report->appointment_id}}" data-mrn="{{$report->mrn}}" 
                             data-test="{{$report->test_id}}}}" 
                             data-url="{{$report->url}}" data-id="{{$report->report_id}}">
