@@ -158,10 +158,12 @@
                                      data-email="{{ $user->email }}"
                                      data-address="{{ $user->address }}"
                                      data-mrn="{{ $user->mrn }}" >
-                                
-                                <img src="{{ asset('assets/icons8-add-20.png') }}">
+                                    <img src="{{asset('assets/icons8-add-20.png')}}" alt="Add Icon">
                             </div>
                             
+
+
+
                             <div class="update"
                                  id="actions-update-user"   data-date="{{ $user->birthdate }}"   data-name="{{ $user->username }}"     data-email="{{ $user->email }}"
                                  data-address="{{ $user->address }}"
@@ -172,6 +174,8 @@
                                 <img src="{{ asset('assets/icons8-modify-20.png') }}">
                             </div>
                             
+
+
                             <div class="delete"  data-name="{{ $user->username }}"
                                 data-email="{{ $user->email }}"
                                 data-address="{{ $user->address }}"
@@ -753,9 +757,12 @@
 
     // Get the cancel button element
 
-
+  let addAppointmodal = document.getElementById("addappointModal");
     // Get the confirm button element
 
+
+
+    let closeaddapoint = document.querySelector("#close-add-appoint");
 
     let addcloseButton = document.querySelector(".choose-modal-close");
     // When the user clicks on a delete button, open the modal
@@ -772,21 +779,21 @@
             document.getElementById('add-appointment__email').value = addButton.dataset.email
 
             console.log(addButton.dataset.mrn);
-            addmodal.style.display = "block";
+            addAppointmodal.style.display = "block";
         });
     });
 
 
 
     // When the user clicks on the close button, close the modal
-    addcloseButton.addEventListener("click", function() {
-        addmodal.style.display = "none";
+    closeaddapoint.addEventListener("click", function() {
+        addAppointmodal.style.display = "none";
     })
 
 
     window.addEventListener("click", function(event) {
-        if (event.target == addmodal) {
-            addmodal.style.display = "none";
+        if (event.target == addAppointmodal) {
+            addAppointmodal.style.display = "none";
         }
     });
 </script>

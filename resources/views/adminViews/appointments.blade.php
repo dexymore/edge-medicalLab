@@ -163,6 +163,22 @@
                 </li> --}}
                 <li>
                     <div class="rowButtons">
+
+                        <div class="add add-report"
+                            id="actions-add-report"
+                            data-appoint-id="{{$appointment->app_id}}"
+                            data-name="{{$appointment->user_name}}"
+                            data-email="{{$appointment->email}}"
+                            data-address="{{$appointment->address}}"
+                            data-mrn="{{$appointment->mrn}}"
+                            data-phone="{{$appointment->phone_number}}"
+                            data-date="{{$appointment->date}}"
+                            data-time="{{$appointment->time}}"
+                            data-test="{{$appointment->test_name}}"
+
+                            >
+                            <img src="{{asset('assets/icons8-add-20.png')}}" alt="Add Icon">
+                        </div>
                         <div class="update-appoint" data-id="{{$appointment->app_id}}"
                              data-mrn="{{$appointment->mrn}}"
                              data-phone="{{$appointment->phone_number}}">
@@ -181,232 +197,110 @@
 
         </div>
      @endforeach
-        <!-- <div class='row containerrow indgo'>
-
-
-            <div class="rowheaders">
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                            1
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            name
-                        </h3>
-                        <h4 id="appointname">
-                            ahmed
-                        </h4>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            type
-                        </h3>
-                        <h4>
-                            heart
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            email
-                        </h3>
-                        <h4 id="appointemail">
-                            ahmed@gmial.com
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            appointment-id
-                        </h3>
-                        <h4 id="appointid">
-                            2213
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowItem">
-                        <h3>
-                            user-id
-                        </h3>
-                        <h4 id="appointuserid">
-                            123
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowButtons">
-                        <div class="update-appoint"><img src=" ../assets/icons8-modify-20.png"></div>
-                        <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
-                    </div>
-                </li>
-
-            </div>
-
-
-
-        </div> -->
-        <!-- <div class='row containerrow indgo'>
-
-            <div class=" rowcontainer">
-            </div>
-            <div class="rowheaders">
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                            1
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            name
-                        </h3>
-                        <h4 id="appointname">
-                            yara
-                        </h4>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            type
-                        </h3>
-                        <h4>
-                            heart
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            email
-                        </h3>
-                        <h4 id="appointemail">
-                            yara@gmial.com
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            appointment-id
-                        </h3>
-                        <h4 id="appointid">
-                            221311
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowItem">
-                        <h3>
-                            user-id
-                        </h3>
-                        <h4 id="appointuserid">
-                            123
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowButtons">
-                        <div class="update-appoint"><img src=" ../assets/icons8-modify-20.png"></div>
-                        <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
-                    </div>
-                </li>
-
-            </div>
-
-
-
-        </div> -->
+        
 
     </section>
 
 
 
 
+    <div id="addtestModal" class="add-modal">
+        <div class="add-modal-content">
+            <span class="close-add" id="close-add-test">&times;</span>
+            <h2>add report</h2>
+            <form action="index.php" method="POST" enctype="multipart/form-data">
 
-    <!-- <footer class="footer" id="contact">
-        <div class="footer-container">
-            <div class="footer-contact-us">
-                <h3>Contact Us</h3>
-                <ul>
-                    <li>2946 Angus Road, NY</li>
-                    <li>+31 123 456 7890</li>
-                    <li>contact@edge.com</li>
-                </ul>
-            </div>
-            <div class="footer-account">
-                <h3>Account</h3>
-                <ul>
-                    <li>Sign in</li>
-                    <li>Create account</li>
-                    <li>IOS App</li>
-                    <li>Android App</li>
-                </ul>
-            </div>
-            <div class="footer-company">
-                <h3>Company</h3>
-                <ul>
-                    <li>About Us</li>
-                    <li>Services</li>
-                    <li>Our Team</li>
-                    <li>Contacts</li>
-                </ul>
-            </div>
-            <div class="footer-legal">
-                <h3>LEGAL</h3>
-                <ul>
-                    <li>Claims</li>
-                    <li>Privacy</li>
-                    <li>Terms</li>
-                    <li>Policies</li>
-                </ul>
-            </div>
+                <label for=""></label>
+                <input type="hidden" id="mrn-input" placeholder="MRN">
+                <input type="hidden" id="mrn-input_hidden" name="mrn" placeholder="MRN">
+                <label for=""></label>
+                <!-- <input type="text" id="app-id" name="app_id" placeholder="appointment-id"> -->
+               <input type="text" id="add-appointment_app_id" name="email" placeholder="email" disabled>
+               
 
+                <input type="text" id="add-appointment__name" name="name" placeholder="name" disabled>
+                <input type="hidden" id="add-appointment__email" name="email" placeholder="email" disabled>
+                <input type="hidden" disabled id="add-appointment-phone">
+                <input type="text" disabled id="add-appointment-testName">
+                <input type="date" disabled id="add-appointment__date" name="date" placeholder="date">
+                <input type="text" disabled id="add-appointment__time" name="time" placeholder="time">
+                <input type="text" disabled id="add-appointment__address" name="address" placeholder="address">
 
-            <div class="footer-subscribe">
-                <h3>SUBSCRIBE TO OUR NEWSLETTER</h3>
-                <p>The latest news, articles, and resources, sent to your inbox weekly.</p>
-                <div class="subscribe-actions">
-                    <input type="email" placeholder="Enter your email address">
-                    <button class="btn btn-subscribe">
-                        Subscribe
-                    </button>
-                </div>
-            </div>
+                <input type="file" id="myFile" name="report-file" class="file-input">
+                <button type="submit" name="add-report" id="add-button-test">add test</button>
+            </form>
         </div>
-        <div class="footer-copyright">
-            <h3>EDGE</h3>
-            <p class="footer__copyright">
-                &copy; Copyright by
-                <a class="footer__link twitter-link" target="_blank" href="https://twitter.com/ibrahim_askar11">Ibrahim
-                    Askar </a>All rights reserved
-            </p>
-        </div>
-        </div>
-    </footer> -->
+    </div>
 
 
+
+
+<script>
+    // Get the modal element
+
+
+    // Get all the delete buttons
+    let addButtons = document.querySelectorAll('.add');
+
+    // Get the cancel button element
+
+  let addTestModal = document.getElementById("addtestModal");
+    // Get the confirm button element
+
+
+
+    let closeaddtest = document.querySelector("#close-add-test");
+
+    let addcloseButton = document.querySelector(".choose-modal-close");
+    // When the user clicks on a delete button, open the modal
+    let mrnInput = document.getElementById("mrn-input")
+    let mrnInputHidden = document.getElementById("mrn-input_hidden")
+    mrnInputAppointment = document.getElementById('add-appointment__mrn')
+    addButtons.forEach(function(addButton) {
+        addButton.addEventListener("click", function() {
+            mrnInput.value = addButton.dataset.mrn
+            mrnInputHidden.value = addButton.dataset.mrn
+            mrnInput.disabled = true
+            //  mrnInputAppointment.value = addButton.dataset.mrn
+         document.getElementById('add-appointment__name').value = addButton.dataset.name
+         document.getElementById('add-appointment_app_id').value = addButton.dataset.appointId
+             document.getElementById('add-appointment__email').value = addButton.dataset.email
+                document.getElementById('add-appointment-phone').value = addButton.dataset.phone
+                document.getElementById('add-appointment-testName').value = addButton.dataset.test
+                document.getElementById('add-appointment__date').value = addButton.dataset.date
+                document.getElementById('add-appointment__time').value = addButton.dataset.time
+                document.getElementById('add-appointment__address').value = addButton.dataset.address
+                
+            
+             console.log(addButton.dataset.appointId)
+
+            // console.log(addButton.dataset.mrn);
+            addTestModal.style.display = "block";
+        });
+    });
+
+
+
+    // When the user clicks on the close button, close the modal
+    closeaddtest.addEventListener("click", function() {
+        addTestModal.style.display = "none";
+    })
+
+
+    window.addEventListener("click", function(event) {
+        if (event.target == addTestModal) {
+            addTestModal.style.display = "none";
+        }
+    });
+</script>
+
+
+
+
+
+
+
+    
     <div id="updateappointModal" class="update-modal">
         <div class="update-modal-content">
             <span class="close-update-appoint">&times;</span>
@@ -461,6 +355,71 @@
 
 </body>
 <!-- update appointments -->
+
+{{-- 
+<script>
+    // Get the modal element
+    let addmodal = document.getElementById("chooseModal");
+
+    // Get all the delete buttons
+    let addButtons = document.querySelectorAll('.add');
+
+    // Get the cancel button element
+
+  let addAppointmodal = document.getElementById("addappointModal");
+    // Get the confirm button element
+
+
+
+    let closeaddapoint = document.querySelector("#close-add-appoint");
+
+    let addcloseButton = document.querySelector(".choose-modal-close");
+    // When the user clicks on a delete button, open the modal
+    let mrnInput = document.getElementById("mrn-input")
+    let mrnInputHidden = document.getElementById("mrn-input_hidden")
+    mrnInputAppointment = document.getElementById('add-appointment__mrn')
+    addButtons.forEach(function(addButton) {
+        addButton.addEventListener("click", function() {
+            mrnInput.value = addButton.dataset.mrn
+            mrnInputHidden.value = addButton.dataset.mrn
+            mrnInput.disabled = true
+            mrnInputAppointment.value = addButton.dataset.mrn
+            document.getElementById('add-appointment__name').value = addButton.dataset.name
+            document.getElementById('add-appointment__email').value = addButton.dataset.email
+
+            console.log(addButton.dataset.mrn);
+            addAppointmodal.style.display = "block";
+        });
+    });
+
+
+
+    // When the user clicks on the close button, close the modal
+    closeaddapoint.addEventListener("click", function() {
+        addAppointmodal.style.display = "none";
+    })
+
+
+    window.addEventListener("click", function(event) {
+        if (event.target == addAppointmodal) {
+            addAppointmodal.style.display = "none";
+        }
+    });
+</script> --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script defer>
     // Get the update modal element

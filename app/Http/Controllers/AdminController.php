@@ -108,12 +108,14 @@ class AdminController extends Controller
             return redirect()->route('adminLogin');
         }
         $appointments = DB::select('
-    SELECT a.app_id, a.date, a.time, a.phone_number, t.name AS test_name, u.username AS user_name, u.email, u.mrn
-    FROM appointments a
-    JOIN tests t ON a.test_type = t.test_id
-    JOIN users u ON a.mrn = u.mrn
-    ORDER BY a.date DESC
-');
+                SELECT a.app_id, a.date, a.time, a.phone_number, t.name AS test_name, u.username AS user_name, u.email, u.mrn, u.address
+                FROM appointments a
+                JOIN tests t ON a.test_type = t.test_id
+                JOIN users u ON a.mrn = u.mrn
+                ORDER BY a.date DESC
+            ');
+
+        // dd($appointments);
 
 
 
@@ -196,7 +198,6 @@ class AdminController extends Controller
 
     public function addRepoert(Request $request)
     {
-        
     }
 
     public function logoutAdmin()

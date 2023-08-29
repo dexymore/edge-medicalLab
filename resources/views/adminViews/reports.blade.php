@@ -96,6 +96,7 @@
 
                         <div class=" rowButtons">
                             <a class="view pointer" href="./view-document/{{$report->url}}" target="_blank"> <img src="{{asset("/assets/icons8-file-24.png")}}"></a>
+                            
                             <div class="update-test pointer" data-app="{{$report->appointment_id}}" data-mrn="{{$report->mrn}}" 
                             data-test="{{$report->test_id}}}}" 
                             data-url="{{$report->url}}" data-id="{{$report->report_id}}">
@@ -356,6 +357,35 @@
         </div>
     </footer> -->
 
+
+
+
+
+
+    <div id="addtestModal" class="add-modal">
+        <div class="add-modal-content">
+            <span class="close-add" id="close-add-test">&times;</span>
+            <h2>add report</h2>
+            <form action="index.php" method="POST" enctype="multipart/form-data">
+
+                <label for=""></label>
+                <input type="text" id="mrn-input" placeholder="MRN">
+                <input type="hidden" id="mrn-input_hidden" name="mrn" placeholder="MRN">
+                <label for=""></label>
+                <!-- <input type="text" id="app-id" name="app_id" placeholder="appointment-id"> -->
+                <select class="select" id="appointment-dropdown" name="app_id">
+                    <option value="0">appointment:</option>
+
+                </select>
+
+
+                <input hidden class="select" id="test-id" name="selected">
+
+                <input type="file" id="myFile" name="report-file" class="file-input">
+                <button type="submit" name="add-report" id="add-button-test">add test</button>
+            </form>
+        </div>
+    </div>
 
 
 
