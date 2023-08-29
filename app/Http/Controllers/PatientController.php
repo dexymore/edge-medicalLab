@@ -52,7 +52,7 @@ class PatientController extends Controller
 
         $reports = DB::table('reports as r')
             ->join('users as u', 'r.mrn', '=', 'u.mrn')
-            ->join('appointments as a', 'r.appointment_id', '=', 'a.app_id')
+            ->join('appointments as a', 'r.app_id', '=', 'a.app_id')
             ->join('tests as t', 'a.test_type', '=', 't.test_id')
             ->where('u.mrn', $mrn)
             ->select('r.report_id', 'r.url', 'u.username', 'u.email', 'u.mrn', 'a.date', 'a.time', 'a.phone_number', 't.name as test_name')

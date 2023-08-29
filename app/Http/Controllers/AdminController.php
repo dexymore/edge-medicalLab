@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Facades\File;
+
 
 class AdminController extends Controller
 {
@@ -181,10 +183,10 @@ class AdminController extends Controller
         if (!session()->has('id')) {
             return redirect()->route('adminLogin');
         }
-        $reports = DB::select(' SELECT r.report_id, r.url,r.appointment_id, u.username, u.email, u.mrn, a.date, a.time, a.phone_number,t.test_id, t.name AS test_name
+        $reports = DB::select(' SELECT r.report_id, r.url,r.app_id, u.username, u.address, u.email, u.mrn, a.date, a.time, a.phone_number,t.test_id, t.name AS test_name
     FROM reports r
     JOIN users u ON r.mrn = u.mrn
-    JOIN appointments a ON r.appointment_id = a.app_id
+    JOIN appointments a ON r.app_id = a.app_id
     JOIN tests t ON a.test_type = t.test_id
     ');
 
@@ -196,9 +198,114 @@ class AdminController extends Controller
 
 
 
-    public function addRepoert(Request $request)
+
+
+    public function uploadFile(Request $request)
     {
+        $request->validate([
+            'app_id' => 'required',
+            'mrn' => 'required',
+            'file' => 'required|mimes:pdf|max:2048',
+        ], [
+            'file.mimes' => 'Please upload a valid PDF file.',
+            'file.max' => 'The file size must be less than 2 MB.'
+        ]);
+    
+        $app_id = $request->app_id;
+        $mrn = $request->mrn;
+        $file = $request->file('file'); // Use 'file' key to retrieve the uploaded file
+    
+        // Fetch data using plain SQL statements
+    
+        $usernameData = DB::select("SELECT username FROM users WHERE mrn = ?", [$mrn])[0];
+        $appointmentData = DB::select("SELECT time, date FROM appointments WHERE app_id = ?", [$app_id])[0];
+    
+        $username = $usernameData->username;
+        $time = $appointmentData->time;
+        $appointmentDate = $appointmentData->date;
+    
+        $hashedFileName = hash('sha256', $mrn . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time)) . '.pdf';
+    
+        // Store the file in the "uploads" folder within the "public" disk using Storage module
+        $file->storeAs('temp', $hashedFileName, 'public'); // Store temporarily
+    
+        // Move the temporarily stored file to the "uploads" folder
+        Storage::disk('public')->move('temp/' . $hashedFileName, 'uploads/' . $hashedFileName);
+    
+        // Insert data using plain SQL statements
+        $reportId = DB::table('reports')->insertGetId([
+            'url' => $hashedFileName,
+            'mrn' => $mrn,
+            'app_id' => $app_id
+        ]);
+    
+        return redirect()->back()->with('success', 'File uploaded successfully.');
     }
+    
+
+
+    public function updateFile(Request $request) {
+        $request->validate([
+            'report_id' => 'required',
+            'app_id' => 'required',
+            'file' => 'required|mimes:pdf|max:2048',
+        ], [
+            'file.mimes' => 'Please upload a valid PDF file.',
+            'file.max' => 'The file size must be less than 2 MB.'
+        ]);
+    
+        $app_id = $request->app_id;
+        $mrn = $request->mrn;
+        $reportId = $request->report_id;
+        $file = $request->file;
+    
+        // ... (retrieve other data from the database)
+    
+        $usernameData = DB::select("SELECT username FROM users WHERE mrn = ?", [$mrn])[0];
+        $appointmentData = DB::select("SELECT time, date FROM appointments WHERE app_id = ?", [$app_id])[0];
+        $username = $usernameData->username;
+        $time = $appointmentData->time;
+        $appointmentDate = $appointmentData->date;
+    
+        // ... (generate hashed file name and other data)
+        $hashedFileName = hash('sha256', $mrn . '_' . $appointmentDate . '_' . $username . '_' . str_replace(':', '_', $time)) . '.pdf';
+    
+        DB::update("UPDATE reports SET url = ? WHERE report_id = ?", [$hashedFileName, $reportId]);
+    
+        $file->storeAs('uploads', $hashedFileName, 'public');
+    
+        return redirect()->back()->with('success', 'File uploaded successfully.');
+    }
+    
+    
+
+    
+
+    public function AdmindeleteReport(Request $request)
+    {
+        $request->validate([
+            'user_report_id' => 'required',
+        ]);
+    
+        $report_id = $request->user_report_id;
+        $oldFileName = DB::table('reports')->where('report_id', $report_id)->value('url');
+    
+        $filePath = public_path('uploads/' . $oldFileName);
+    
+        if (File::exists($filePath)) {
+            try {
+                File::delete($filePath);
+                DB::delete('DELETE FROM reports WHERE report_id = ?', [$report_id]);
+                return back()->with('success', 'Report deleted successfully');
+            } catch (\Exception $e) {
+                return back()->with('error', 'Error deleting file: ' . $e->getMessage());
+            }
+        } else {
+      
+            return back()->with('error', 'File not found for deletion');
+        }
+    }
+    
 
     public function logoutAdmin()
     {

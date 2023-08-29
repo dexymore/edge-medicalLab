@@ -166,25 +166,25 @@
         <div class="add-modal-content">
             <span class="close-add" id="close-add-test">&times;</span>
             <h2>add report</h2>
-            <form action="index.php" method="POST" enctype="multipart/form-data">
-
-                <label for=""></label>
+            <form action="{{route("uploadFile")}}" method="POST"  enctype="multipart/form-data">
+@csrf
+           
                 <input type="hidden" id="mrn-input" placeholder="MRN">
                 <input type="hidden" id="mrn-input_hidden" name="mrn" placeholder="MRN">
-                <label for=""></label>
-                <!-- <input type="text" id="app-id" name="app_id" placeholder="appointment-id"> -->
-               <input type="text" id="add-appointment_app_id" name="email" placeholder="email" disabled>
+           
+
+               <input type="hidden" id="add-appointment_app_id" name="app_id" placeholder="app_id" >
                
 
                 <input type="text" id="add-appointment__name" name="name" placeholder="name" disabled>
-                <input type="hidden" id="add-appointment__email" name="email" placeholder="email" disabled>
-                <input type="hidden" disabled id="add-appointment-phone">
-                <input type="text" disabled id="add-appointment-testName">
-                <input type="date" disabled id="add-appointment__date" name="date" placeholder="date">
-                <input type="text" disabled id="add-appointment__time" name="time" placeholder="time">
-                <input type="text" disabled id="add-appointment__address" name="address" placeholder="address">
+                <input type="text" id="add-appointment__email" name="email" placeholder="email" disabled>
+                <input type="text"  id="add-appointment-phone" name="phone"disabled >
+                <input type="text"  id="add-appointment-testName" name="testName" disabled>
+                <input type="date"  id="add-appointment__date" name="date" placeholder="date" disabled>
+                <input type="text"  id="add-appointment__time" name="time" placeholder="time" disabled>
+                <input type="text"  id="add-appointment__address" name="address" placeholder="address" disabled>
 
-                <input type="file" id="myFile" name="report-file" class="file-input">
+                <input type="file" id="myFile" name="file" class="file-input">
                 <button type="submit" name="add-report" id="add-button-test">add test</button>
             </form>
         </div>
@@ -222,6 +222,7 @@
             //  mrnInputAppointment.value = addButton.dataset.mrn
          document.getElementById('add-appointment__name').value = addButton.dataset.name
          document.getElementById('add-appointment_app_id').value = addButton.dataset.appointId
+
              document.getElementById('add-appointment__email').value = addButton.dataset.email
                 document.getElementById('add-appointment-phone').value = addButton.dataset.phone
                 document.getElementById('add-appointment-testName').value = addButton.dataset.test

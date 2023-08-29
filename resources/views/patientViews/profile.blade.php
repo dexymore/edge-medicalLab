@@ -274,19 +274,6 @@
     
 
 
-                    <label for="select"></label>
-                    <select class="select" name="selected">
-                        <option value="0" {{ old('selected') == '0' ? 'selected' : '' }}>Test Type:</option>
-                        <option value="1" {{ old('selected') == '1' ? 'selected' : '' }}>Cardiologists</option>
-                        <option value="2" {{ old('selected') == '2' ? 'selected' : '' }}>Dermatologists</option>
-                        <option value="3" {{ old('selected') == '3' ? 'selected' : '' }}>Endocrinologists</option>
-                        <option value="4" {{ old('selected') == '4' ? 'selected' : '' }}>Gastroenterologists</option>
-                        <option value="5" {{ old('selected') == '5' ? 'selected' : '' }}>Allergists</option>
-                        <option value="6" {{ old('selected') == '6' ? 'selected' : '' }}>Immunologists</option>
-                    </select>
-                    @error('selected')
-        <h3 class="input-error" id="phone-error">{{$message}}</h3>
-    @enderror
                     
                     <label for="time"></label>
                     <input name="time" type="time" value="{{count($appointments) > 0? date('H:i', strtotime($appointment->time)):"" }}" placeholder="time">
@@ -299,6 +286,22 @@
                     @error('date')
         <h3 class="input-error" id="phone-error">{{$message}}</h3>
     @enderror
+
+
+    <label for="select"></label>
+    <select class="select" style="width: 100%" name="selected">
+        <option value="0" {{ old('selected') == '0' ? 'selected' : '' }}>Test Type:</option>
+        <option value="1" {{ old('selected') == '1' ? 'selected' : '' }}>Cardiologists</option>
+        <option value="2" {{ old('selected') == '2' ? 'selected' : '' }}>Dermatologists</option>
+        <option value="3" {{ old('selected') == '3' ? 'selected' : '' }}>Endocrinologists</option>
+        <option value="4" {{ old('selected') == '4' ? 'selected' : '' }}>Gastroenterologists</option>
+        <option value="5" {{ old('selected') == '5' ? 'selected' : '' }}>Allergists</option>
+        <option value="6" {{ old('selected') == '6' ? 'selected' : '' }}>Immunologists</option>
+    </select>
+    @error('selected')
+<h3 class="input-error" id="phone-error">{{$message}}</h3>
+@enderror
+
                     <button type="submit" name="update_user" id="updateButton">Update</button>
                 </form>
                 
