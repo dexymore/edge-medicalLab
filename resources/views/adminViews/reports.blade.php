@@ -1,5 +1,6 @@
 @extends('_base')
 @section('dynamic-css')
+<link rel="stylesheet" href={{asset("/css/adminstyles.css")}} />
 @endsection
 <body>
     @include('components.adminNavbar')
@@ -97,9 +98,19 @@
                         <div class=" rowButtons">
                             <a class="view pointer" href="./view-document/{{$report->url}}" target="_blank"> <img src="{{asset("/assets/icons8-file-24.png")}}"></a>
                             
-                            <div class="update-test pointer" data-app="{{$report->appointment_id}}" data-mrn="{{$report->mrn}}" 
-                            data-test="{{$report->test_id}}}}" 
-                            data-url="{{$report->url}}" data-id="{{$report->report_id}}">
+                            <div class="update-test pointer"
+                            data-appoint-id="{{$report->app_id}}"
+                            data-report-id="{{$report->report_id}}"
+                            data-name="{{$report->username}}"
+                            data-email="{{$report->email}}"
+                            data-address="{{$report->address}}"
+                            data-mrn="{{$report->mrn}}"
+                            data-phone="{{$report->phone_number}}"
+                            data-date="{{$report->date}}"
+                            data-time="{{$report->time}}"
+                            data-test="{{$report->test_name}}">
+
+                            
                                 <img src=" {{asset("/assets/icons8-modify-20.png")}}">
                             </div>
                             <div class="delete pointer" data-url=" {{$report->url}}" data-id="{{$report->report_id}}"> <img src="{{asset("/assets/icons8-delete-20.png")}}"></div>
@@ -110,252 +121,10 @@
                 </div>
             </div>
             @endforeach
-        <!-- <div class='row containerrow indgo '>
-
-            <div class=" rowcontainer">
-            </div>
-            <div class="rowheaders">
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                            1
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            name
-                        </h3>
-                        <h4 id="testname">
-                            ahmed
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            date
-                        </h3>
-                        <h4 id="testdate">
-                            11/12/1011
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            type
-                        </h3>
-                        <h4 id="testtype">
-                            heart
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowItem">
-                        <h3>
-                            email
-                        </h3>
-                        <h4 id="testemail">
-                            ahmed@gmial.com
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            phone
-                        </h3>
-                        <h4 id="testphone">
-                            01222213
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            user-id
-                        </h3>
-                        <h4 id="testuserId">
-                            123
-                        </h4>
-                    </div>
-                </li>
-                <li>
-
-                    <div class=" rowButtons">
-                        <div class="update-test"><img src=" ../assets/icons8-modify-20.png">
-                        </div>
-                        <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
-                    </div>
-                </li>
-
-
-            </div>
-
-
-
-
-        </div> -->
-        <!-- <div class='row containerrow indgo '>
-
-            <div class=" rowcontainer">
-            </div>
-            <div class="rowheaders">
-
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                            1
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            name
-                        </h3>
-                        <h4 id="testname">
-                            aloka
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            date
-                        </h3>
-                        <h4 id="testdate">
-                            11/12/1011
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            type
-                        </h3>
-                        <h4 id="testtype">
-                            heart
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class=" rowItem">
-                        <h3>
-                            email
-                        </h3>
-                        <h4 id="testemail">
-                            ysss@gmial.com
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            phone
-                        </h3>
-                        <h4 id="testphone">
-                            01222
-                        </h4>
-                    </div>
-                </li>
-                <li>
-                    <div class="rowItem">
-                        <h3>
-                            user-id
-                        </h3>
-                        <h4 id="testuserId">
-                            1233
-                        </h4>
-                    </div>
-                </li>
-                <li>
-
-                    <div class=" rowButtons">
-                        <div class="update-test"><img src=" ../assets/icons8-modify-20.png">
-                        </div>
-                        <div class="delete"> <img src="../assets/icons8-delete-20.png"></div>
-                    </div>
-                </li>
-
-
-            </div>
-
-
-
-
-        </div> -->
+    
     </section>
 
-    <!-- <footer class="footer" id="contact">
-        <div class="footer-container">
-            <div class="footer-contact-us">
-                <h3>Contact Us</h3>
-                <ul>
-                    <li>2946 Angus Road, NY</li>
-                    <li>+31 123 456 7890</li>
-                    <li>contact@edge.com</li>
-                </ul>
-            </div>
-            <div class="footer-account">
-                <h3>Account</h3>
-                <ul>
-                    <li>Sign in</li>
-                    <li>Create account</li>
-                    <li>IOS App</li>
-                    <li>Android App</li>
-                </ul>
-            </div>
-            <div class="footer-company">
-                <h3>Company</h3>
-                <ul>
-                    <li>About Us</li>
-                    <li>Services</li>
-                    <li>Our Team</li>
-                    <li>Contacts</li>
-                </ul>
-            </div>
-            <div class="footer-legal">
-                <h3>LEGAL</h3>
-                <ul>
-                    <li>Claims</li>
-                    <li>Privacy</li>
-                    <li>Terms</li>
-                    <li>Policies</li>
-                </ul>
-            </div>
 
-
-            <div class="footer-subscribe">
-                <h3>SUBSCRIBE TO OUR NEWSLETTER</h3>
-                <p>The latest news, articles, and resources, sent to your inbox weekly.</p>
-                <div class="subscribe-actions">
-                    <input type="email" placeholder="Enter your email address">
-                    <button class="btn btn-subscribe">
-                        Subscribe
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <h3 class="Poiret">EDGE</h3>
-            <p class=" footer__copyright">
-                &copy; Copyright by
-                <a class="footer__link twitter-link" target="_blank" href="https://twitter.com/ibrahim_askar11">Ibrahim
-                    Askar </a>All rights reserved
-                </p>
-        </div>
-        </div>
-    </footer> -->
 
 
 
@@ -389,45 +158,116 @@
 
 
 
-    <div id="updateTestModal" class="add-modal">
+    <div id="updatetestModal" class="add-modal">
         <div class="add-modal-content">
             <span class="close-add" id="close-update-test">&times;</span>
-            <h2>Update Report</h2>
-            <form action="reports.php" method="POST" enctype="multipart/form-data">
+            <h2>add report</h2>
+            <form action="{{route("updateFile")}}" method="POST"  enctype="multipart/form-data">
+@csrf
+           
+                <input type="hidden" id="mrn-input" placeholder="MRN">
+                <input type="hidden" id="mrn-input_hidden" name="mrn" placeholder="MRN">
+           <input type="hidden" id="report_id" name="report_id">
 
-                <label for=""></label>
-                <input type="text" id="mrn-input" placeholder="MRN">
-                <label for=""></label>
-                <input type="text" id="app-id" placeholder="appointment-id">
+               <input type="hidden" id="update-test_app_id" name="app_id" placeholder="app_id" >
+               <input type="hidden" id="update-test__mrn" name="mrn">
 
+                <input type="text" id="update-test__name" name="name" placeholder="name" disabled>
+                <input type="text" id="update-test__email" name="email" placeholder="email" disabled>
+                <input type="text"  id="update-test-phone" name="phone"disabled >
+                <input type="text"  id="update-test-testName" name="testName" disabled>
+                <input type="date"  id="update-test__date" name="date" placeholder="date" disabled>
+                <input type="text"  id="update-test__time" name="time" placeholder="time" disabled>
+                <input type="text"  id="update-test__address" name="address" placeholder="address" disabled>
 
-
-                <select class="select" id="selected" name="">
-                    <option value="0">Test Type:</option>
-                    <?php// foreach ($tests as $test) : ?>
-                        <option value="<?php //echo $test['test_id']; ?>">
-                            <?php //echo $test['name']; ?>
-                        </option>
-                    <?php// endforeach; ?>
-                </select>
-
-
-
-
-                <input type="file" id="myFile" name="report-file" class="file-input">
-                <input type="hidden" value="" name="temp_url" id="url">
-                <input type="hidden" value="" name="report_id" id="report-id">
-                <input type="hidden" id="app-id_input_hidden" name="app_id">
-                <input type="hidden" id="mrn_input_hidden" name="mrn">
-                <input type="hidden" id="selected_input_hidden" name="selected">
-                <span> last uploaded: <?php //echo $report['url'] ?></span>
-                <button type="submit" name="update-report" id="add-button-test">update report</button>
+                <input type="file" id="myFile" name="file" class="file-input">
+                <button type="submit" name="add-report" id="add-button-test">add test</button>
             </form>
         </div>
     </div>
 
+
+
+    <script defer>
+        let updateButtons = document.querySelectorAll('.update-test');
+
+// Get the cancel button element
+
+let updateTestModal = document.getElementById("updatetestModal");
+// Get the confirm button element
+
+
+
+let closeupdatetest = document.querySelector("#close-update-test");
+
+let addcloseButton = document.querySelector(".choose-modal-close");
+// When the user clicks on a delete button, open the modal
+let mrnInput = document.getElementById("mrn-input")
+let mrnInputHidden = document.getElementById("mrn-input_hidden")
+mrnInputAppointment = document.getElementById('update-test__mrn')
+updateButtons.forEach(function(updateButton) {
+    updateButton.addEventListener("click", function() {
+        mrnInput.value = updateButton.dataset.mrn
+        mrnInputHidden.value = updateButton.dataset.mrn
+
+        //  mrnInputAppointment.value = addButton.dataset.mrn
+     document.getElementById('update-test__name').value = updateButton.dataset.name
+     document.getElementById('update-test_app_id').value = updateButton.dataset.appointId
+     document.getElementById('update-test__mrn').value = updateButton.dataset.mrn
+document.getElementById('report_id').value = updateButton.dataset.reportId
+         document.getElementById('update-test__email').value = updateButton.dataset.email
+            document.getElementById('update-test-phone').value = updateButton.dataset.phone
+            document.getElementById('update-test-testName').value = updateButton.dataset.test
+            document.getElementById('update-test__date').value = updateButton.dataset.date
+            document.getElementById('update-test__time').value = updateButton.dataset.time
+            document.getElementById('update-test__address').value = updateButton.dataset.address
+     
+        
+         console.log(updateButton.dataset.appointId)
+
+        // console.log(updateButton.dataset.mrn);
+        updateTestModal.style.display = "block";
+    });
+});
+
+
+
+// When the user clicks on the close button, close the modal
+closeupdatetest.addEventListener("click", function() {
+    updateTestModal.style.display = "none";
+})
+
+
+window.addEventListener("click", function(event) {
+    if (event.target == updateTestModal) {
+        updateTestModal.style.display = "none";
+    }
+});
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div id="deleteModal" class="modal">
-        <form action="reports.php" method="POST" class="modal-content">
+        <form action="{{route("AdmindeleteReport")}}" method="POST" class="modal-content">
+            @csrf
             <input type="hidden" id="delete_report_value" name="user_report_id" value="">
             <input type="hidden" id="delete_report_url" name="user_report_url" value="">
             <span class="close">&times;</span>
@@ -441,89 +281,7 @@
 </body>
 
 
-<script defer>
-    // Get the update modal element
-    let updateTestModal = document.querySelector("#updateTestModal");
-    console.log(updateTestModal);
 
-    // Get all the update buttons
-    let updateTestButtons = document.querySelectorAll('.update-test');
-
-    // Get the close button element
-    let closeupdatetest = updateTestModal.querySelector("#close-update-test");
-    console.log(closeupdatetest);
-
-    // Get the update button element
-    let updateTestButton = updateTestModal.querySelector("#updateButton");
-
-    let testrow = "";
-
-    // When the user clicks on an update button, open the update modal
-    updateTestButtons.forEach(function(updateTestButton) {
-        updateTestButton.addEventListener("click", function() {
-            updateTestModal.style.display = "block";
-            // Set the row to update as the parent of the clicked button
-            let testRowToUpdate = updateTestButton.parentNode.parentNode.parentNode.parentElement;
-            // Set the input values to the current row values
-            let mrnInput = document.querySelector("#mrn-input");
-            let fileInput = document.querySelector("#url");
-            let appointmentIDInput = document.querySelector("#app-id");
-            let testType = document.querySelector("#selected");
-            let reportId = document.querySelector("#report-id");
-
-            mrnInput.value = updateTestButton.dataset.mrn
-            mrnInput.disabled = true;
-            document.querySelector("#mrn_input_hidden").value = updateTestButton.dataset.mrn
-            appointmentIDInput.value = updateTestButton.dataset.app
-            appointmentIDInput.disabled = true;
-            document.querySelector("#app-id_input_hidden").value = updateTestButton.dataset.app
-            testType.value = updateTestButton.dataset.test
-            testType.disabled = true;
-            document.querySelector("#selected_input_hidden").value = updateTestButton.dataset.test
-            fileInput.value = updateTestButton.dataset.url
-            reportId.value = updateTestButton.dataset.id
-        });
-    });
-
-
-    // When the user clicks on the close button, close the update modal
-    closeupdatetest.onclick = function() {
-        updateTestModal.style.display = "none"
-    };
-
-    // When the user clicks outside the update modal, close it
-    window.addEventListener("click", function(event) {
-        if (event.target == updateTestModal) {
-            updateTestModal.style.display = "none";
-        }
-    });
-
-
-    // When the user clicks on the update button, update the row and close the update modal
-    updateTestButton.addEventListener("click", function() {
-
-        // Update the row here
-
-
-
-
-        let emailvalue = document.getElementById("testemailform").value;
-        let phonevalue = document.getElementById("testphoneform").value;
-        let userid = document.getElementById("userIdform").value;
-        let nameValue = document.getElementById("testnameform").value
-        // Update the text content of an element with ID "name" inside a row element
-
-        testrow.querySelector("#testemail").textContent =
-            emailvalue;
-
-        testrow.querySelector("#testphone").textContent = phonevalue;
-
-        testrow.querySelector("#testuserId").textContent = userid;
-        testrow.querySelector("#testname").textContent = nameValue
-        document.getElementById("updateTestModal")
-            .style.display = "none";
-    });
-</script>
 
 
 

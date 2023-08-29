@@ -8,7 +8,7 @@
 
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('css/modals.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href={{asset("/css/adminstyles.css")}} />
+
 
     @yield('dynamic-css')
 

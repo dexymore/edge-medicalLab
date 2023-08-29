@@ -22,9 +22,7 @@ Route::get('/', [PatientController::class, 'index'])->name('index');
 
 //auth middleware to make sure that the user is logged in
 Route::group(['middleware' => 'PatientAuth'], function () {
-    Route::get('/profile', [PatientController::class, 'profile'])->name('profile');
-    Route::get('/view-document/{url}', [PatientController::class, 'viewDocument'])->name('viewDocument');
-    Route::post('/delete-appointments', [PatientController::class, 'deleteAppointments'])->name('deleteAppointments');
+    Route::get('/profile', [PatientController::class, 'profile'])->name('profile');    Route::post('/delete-appointments', [PatientController::class, 'deleteAppointments'])->name('deleteAppointments');
     Route::post('/update-appointments', [PatientController::class, 'updateAppointments'])->name('updateAppointments');
     Route::post('/update-userinfo', [PatientController::class, 'updateUserInfo'])->name('updateUserInfo');
     Route::get('/logout', [PatientController::class, 'logout'])->name('logout');
@@ -44,7 +42,9 @@ Route::group(['middleware' => 'GuestPatientAuth'], function () {
 
 
 
+Route::get('/view-document/{url}', [PatientController::class, 'viewDocument'])->name('viewDocument');
 
+Route::get('/view-document/{url}', [PatientController::class, 'viewDocument'])->name('viewDocument');
 
 ///admin routes
 
@@ -65,7 +65,9 @@ Route::group(['middleware' => 'AdminAuth'], function () {
     Route::post('/updateUserAppointment', [AdminController::class, 'updateUserAppointment'])->name('updateUserAppointment');
     Route::post('/deleteUserAppointment', [AdminController::class, 'deleteUserAppointment'])->name('deleteUserAppointment');
     Route::get('/adminReports', [AdminController::class, 'adminReports'])->name('adminReports');
-    Route::post('/add-report', [AdminController::class, 'addRepoert'])->name('addReport');
+    Route::post('/uploadFile', [AdminController::class, 'uploadFile'])->name('uploadFile');
+    Route::post('/AdmindeleteReport', [AdminController::class, 'AdmindeleteReport'])->name('AdmindeleteReport');
+    Route::post('/updateFile', [AdminController::class, 'updateFile'])->name('updateFile');
 });
 
 
