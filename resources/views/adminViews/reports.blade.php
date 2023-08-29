@@ -1,6 +1,5 @@
-@extends('_base')
-@section('dynamic-css')
-@endsection
+@include('_adminBase')
+
 <body>
     @include('components.adminNavbar')
 

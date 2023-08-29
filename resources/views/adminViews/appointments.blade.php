@@ -1,48 +1,6 @@
-<?php
-// require_once __DIR__ . '/../db/admin.php';
-// session_start();
-// if (!isset($_SESSION['admin'])) {
-//     header('location:login.php');
-//     exit();
-// }
-// $appointments = fetchAppointments();
-// if (isset($_POST['delete_app'])) {
-//     $app_id = $_POST['app_id'];
-//     deleteAppointment($app_id);
-//     $appointments = fetchAppointments();
-// }
-// if (isset($_POST['update_app'])) {
-//     $app_id = $_POST['app_id'];
-//     $mrn = $_POST['user_mrn'];
-//     $phone = $_POST['phone'];
-//     $name = $_POST['name'];
-//     $email = $_POST['email'];
-//     $testType = $_POST['selected'];
-//     $time = $_POST['time'];
-//     $formattedTime = $time . ':00';
-//     $date = $_POST['date'];
 
-//     if (empty($mrn) || empty($phone) || empty($name) || empty($email) || empty($testType) || empty($time) || empty($date)) {
-//         $error = "Missing credentials";
-//     }
-//     if ($date < date("Y-m-d")) {
-//         $error = "wrong information entered";
-//     }
-//     if (!preg_match("/^[0-9]{11}$/", $phone)) {
-//         $error = "wrong information entered";
-//     }
-//     if (empty($error)) {
-//         updateAppointment($app_id, $mrn, $phone, $testType, $formattedTime, $date);
-//         $appointments = fetchAppointments();
-//     }
-// }
-// // print_r($appointments);
+@include('_adminBase')
 
-?>
-@extends('_base')
-@section('dynamic-css')
-<link rel="stylesheet" href={{asset("/css/adminstyles.css")}} />
-@endsection
 <body>
     @include('components.adminNavbar')
 

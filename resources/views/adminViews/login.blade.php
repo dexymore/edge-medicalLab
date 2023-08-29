@@ -1,36 +1,6 @@
-{{-- if (empty($email)) {
-    $error = "Missing credentials";
-  }
-  if (empty($password)) {
-    $error = "Missing credentials";
-  }
-  if (empty($error)) {
-    $admin = login($email, $password);
-    if ($admin === null) {
-      $error = "Wrong email or password";
-    } else {
-      $error = '';
-      $_SESSION['admin'] = [
-        "id" => $admin['id'],
-        "name" => $admin['name'],
-        "email" => $admin['email'],
-        "address" => $admin['address'],
-        "birthdate" => $admin['birthdate'],
-        "age" => $admin['age'],
-      ];
-      header("location: index.php");
-    }
-    // header('location:index.php');
-    print_r($admin);
-  }
-} --}}
 
+@include('_adminBase')
 
-
-@extends('_base')
-@section('dynamic-css')
-<link rel="stylesheet" href={{asset("/css/styles.css")}} />
-@endsection
 
 <body>
     <script>

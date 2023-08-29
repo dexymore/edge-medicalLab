@@ -1,107 +1,13 @@
-<?php
-// require_once __DIR__ . '/../db/admin.php';
-// session_start();
-// if (!isset($_SESSION['admin'])) {
-//     header('location:login.php');
-//     exit();
-// }
 
-// $users = fetchUsers();
-// if (isset($_POST['delete_user'])) {
+@include('_adminBase')
 
-//     $user_mrn = $_POST['user_mrn'];
-//     deleteUser($user_mrn);
-//     $users = fetchUsers();
-// }
-
-// if (isset($_POST['add-report'])) {
-//     $testTypeID = $_POST['selected'];
-//     $appointmentID = $_POST['app_id'];
-//     $mrn = $_POST['mrn'];
-//     $file = $_FILES['report-file'];
-
-//     if (!empty($testTypeID) && !empty($appointmentID) && !empty($mrn) && $file['size'] != 0 && $appointmentID != 0) {
-//         uploadFile($testTypeID, $appointmentID, $mrn, $file);
-//     } else {
-//         $error = "Error: Missing required input values.";
-//     }
-// }
-// if (isset($_POST['update_user'])) {
-//     $userMrn = $_POST['user_mrn'];
-//     $userEmail = $_POST['email'];
-//     $userName = $_POST['name'];
-//     $userDate = $_POST['date'];
-//     $userAddress = $_POST['address'];
-//     $error = "";
-//     if (empty($userMrn) || empty($userEmail) || empty($userName) || empty($userDate) || empty($userAddress)) {
-//         $error = "Missing credentials";
-//     }
-//     if ($userDate >= date("Y-m-d", strtotime("-16 years"))) {
-//         $error = "User can not be less than 16 years old";
-//     }
-//     if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
-//         $error = "Please enter a valid email";
-//     }
-//     if (empty($error)) {
-//         updateUser($userMrn, $userName, $userEmail, $userAddress, $userDate);
-//         $users = fetchUsers();
-//     }
-// }
-// if (isset($_POST['add_app'])) {
-//     // print_r($_POST);
-//     $userMrn = $_POST['user_mrn'];
-//     $testType = $_POST['selected'];
-//     $date = $_POST['date'];
-//     $email = $_POST['email'];
-//     $time = $_POST['time'];
-//     $name = $_POST['name'];
-//     $phone = $_POST['phone'];
-//     $error = "";
-//     if (empty($userMrn) || empty($testType) || empty($date) || empty($email) || empty($time) || empty($name) || empty($phone)) {
-//         $error = "Missing credentials";
-//     }
-//     if ($date < date("Y-m-d")) {
-//         $error = "Please enter a valid date";
-//     }
-//     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-//         $error = "Please enter a valid email";
-//     }
-//     if (empty($error)) {
-//         addAppointment($userMrn, $phone, $testType, $time, $date);
-//     }
-// }
-
-// $conn = db_connect();
-// $sql = "SELECT test_id, name FROM tests";
-
-// $stmt = mysqli_prepare($conn, $sql);
-// mysqli_stmt_execute($stmt);
-// $result = mysqli_stmt_get_result($stmt);
-// $tests = mysqli_fetch_all($result, MYSQLI_ASSOC);
-// mysqli_stmt_close($stmt);
-// mysqli_close($conn);
-// // print_r($tests);
-
-// // print_r($_SESSION['admin'])
-?>
-@extends('_base')
-@section('dynamic-css')
-<link rel="stylesheet" href={{asset("/css/adminstyles.css")}} />
-@endsection
 <body>
     @include('components.adminNavbar')
     <section id="users">
         <h1>USERS</h1>
 
 
-        <h3 class="input-error" style="margin-top: 1.5rem;" id="form-error">
-            <?php 
-                // if (!empty($error)) : ?>
-                <?php
-                //  echo $error; ?>
-            <?php
-        //  endif; ?>
-        </h3>
+        
         @foreach ($users as $user )
             
   

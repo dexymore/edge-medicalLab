@@ -295,7 +295,7 @@ class PatientController extends Controller
 
         $user = DB::select("SELECT * FROM users WHERE email = ? ", [$email]);
         if ($user == null) {
-            return back()->with('error', ' wrong email')->withInput();
+            return back()->with(['error' => 'Invalid email or password'])->withInput();
         }
 
         if (Hash::check($password, $user[0]->password)) {
