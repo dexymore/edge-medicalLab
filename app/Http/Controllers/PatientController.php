@@ -103,8 +103,6 @@ class PatientController extends Controller
     }
     public function updatePassword(Request $request)
     {
-
-
         $request->validate([
             'current_password' => 'required',
             'new_password' =>  'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z]).+$/',
@@ -123,7 +121,6 @@ class PatientController extends Controller
         if ($user == null) {
             return back()->with('error', 'Wrong email')->withInput();
         }
-
         if (Hash::check($currentPassword, $user[0]->password)) {
             $newHashedPassword = Hash::make($newPassword);
             DB::update("UPDATE users SET password = ? WHERE mrn = ?", [$newHashedPassword, $mrn]);
@@ -304,16 +301,17 @@ class PatientController extends Controller
             session(['mrn' => $user[0]->mrn]);
             return to_route('profile');
         } else {
-            return back()->with('error', ' wrong password');
+            return back()->with('error', 'Invalid email or password');
         }
     }
 
     public function logout()
     {
 
-        session()->invalidate();
+        session()->forget('mrn');
         return to_route('index');
     }
+
 
 
 

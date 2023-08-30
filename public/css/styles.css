@@ -1815,3 +1815,10 @@ html .pricing {
   fill: #ffffff;
   justify-self: end;
 }
+
+
+.contact-form-input li{
+  max-height: 3rem !important;
+  display: flex; 
+  align-items: center;
+}

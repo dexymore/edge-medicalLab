@@ -15,12 +15,11 @@ class GuestPatientAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-if(session('mrn')){
+        if (session('mrn')) {
 
-return to_route('profile');
-    
-}
-         
+            return to_route('profile');
+        }
+
         return $next($request);
     }
 }

@@ -15,10 +15,10 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(session('id')===null){
+        if (!session('id')) {
             return redirect()->route('adminLogin')->with('error', 'You must login as an admin first to access this resource');
         }
-        
+
         return $next($request);
     }
 }

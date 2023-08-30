@@ -16,8 +16,6 @@
         // endif; ?>
         </h3>
     @foreach ($reports as $report )
-        
-
             <div class='row containerrow indgo '>
                 <div class="rowheaders">
 
@@ -94,7 +92,9 @@
                     <li>
 
                         <div class=" rowButtons">
-                            <a class="view pointer" href="./view-document/{{$report->url}}" target="_blank"> <img src="{{asset("/assets/icons8-file-24.png")}}"></a>
+                            <a class="view pointer" href="./view-document/{{$report->url}}" target="_blank">
+                                 <img src="{{asset("/assets/icons8-file-24.png")}}">
+                            </a>
                             
                             <div class="update-test pointer"
                             data-appoint-id="{{$report->app_id}}"
@@ -132,7 +132,7 @@
     <div id="addtestModal" class="add-modal">
         <div class="add-modal-content">
             <span class="close-add" id="close-add-test">&times;</span>
-            <h2>add report</h2>
+            <h2>Update Report</h2>
             <form action="index.php" method="POST" enctype="multipart/form-data">
 
                 <label for=""></label>
@@ -149,7 +149,7 @@
                 <input hidden class="select" id="test-id" name="selected">
 
                 <input type="file" id="myFile" name="report-file" class="file-input">
-                <button type="submit" name="add-report" id="add-button-test">add test</button>
+                <button type="submit" name="add-report" id="add-button-test">Update Report</button>
             </form>
         </div>
     </div>
@@ -159,7 +159,7 @@
     <div id="updatetestModal" class="add-modal">
         <div class="add-modal-content">
             <span class="close-add" id="close-update-test">&times;</span>
-            <h2>add report</h2>
+            <h2>Update Report</h2>
             <form action="{{route("updateFile")}}" method="POST"  enctype="multipart/form-data">
 @csrf
            
@@ -179,7 +179,7 @@
                 <input type="text"  id="update-test__address" name="address" placeholder="address" disabled>
 
                 <input type="file" id="myFile" name="file" class="file-input">
-                <button type="submit" name="add-report" id="add-button-test">add test</button>
+                <button type="submit" name="add-report" id="add-button-test">Update</button>
             </form>
         </div>
     </div>

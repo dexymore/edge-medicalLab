@@ -2,8 +2,12 @@
 @include('_patientBase')
 <body>
     @include('components.navbar')
-
-
+       @if(session('error'))
+            <script>
+                alert('{{ session('error') }}');
+            </script>
+        @endif
+        
     <section class="contact" id="home">
         <div class=" contact-img-container">
             <img class="contact-img" src="assets/background2.jpg" alt="" />
@@ -104,7 +108,7 @@
                                     <p>
                                         This is a {{ $report->test_name }} test taken on {{ $report->date }} at {{ $report->time }} you can check the results of your test from here
                                         <span style="margin-top:0.8rem; display:block; color:black;">
-                                            <a href="{{ route('viewDocument', ['url' => $report->url]) }}" target="_blank"> click here to view report</a>
+                                            <a href="{{ route('patientViewDocument', ['url' => $report->url]) }}" target="_blank"> click here to view report</a>
                                         </span>
                                     </p>
                                 </div>
@@ -268,24 +272,17 @@
                     <input type="email" disabled value="{{ $patient->email }}" id="emailform" name="email" placeholder="email">
                     <label for="phone"></label>
                     <input type="tel" id="phoneform" name="phone" placeholder="phone">
-@error('phone')
-        <h3 class="input-error" id="phone-error">{{$message}}</h3>
-    @enderror
-    
+
 
 
                     
                     <label for="time"></label>
                     <input name="time" type="time" value="{{count($appointments) > 0? date('H:i', strtotime($appointment->time)):"" }}" placeholder="time">
-                    @error('time')
-        <h3 class="input-error" id="phone-error">{{$message}}</h3>
-    @enderror
+                 
                     <label for="date"></label>
                     <input name="date" value="{{count($appointments) > 0? date('Y-m-d', strtotime($appointment->date)):"" }}" type="date" placeholder="Date">
 
-                    @error('date')
-        <h3 class="input-error" id="phone-error">{{$message}}</h3>
-    @enderror
+                
 
 
     <label for="select"></label>
@@ -298,9 +295,7 @@
         <option value="5" {{ old('selected') == '5' ? 'selected' : '' }}>Allergists</option>
         <option value="6" {{ old('selected') == '6' ? 'selected' : '' }}>Immunologists</option>
     </select>
-    @error('selected')
-<h3 class="input-error" id="phone-error">{{$message}}</h3>
-@enderror
+    
 
                     <button type="submit" name="update_user" id="updateButton">Update</button>
                 </form>
@@ -316,31 +311,17 @@
                 <span class="close-edit" id="close-user-info">&times;</span>
                 <h2>Edit Info</h2>
                 <form action="{{ route('updateUserInfo') }}" method="POST">
-@csrf
-{{-- <input type="hidden" name="mrn" value="{{ $mrn }}"> --}}
+                @csrf
                     <label for=""></label>
                   
                     <input type="text" id="editusername" name="username_input" placeholder="name">
-                    @error('username_input')
-         <h3 class="input-error" id="name-error">{{$message}}</h3>
-     @enderror
                     <label for=""></label>
                     <input type="text" id="edituseremail" name="email_input" placeholder="email">
-                    @error('email_input')
-            <h3 class="input-error" id="email-error">{{$message}}</h3>
-        @enderror
                     <label for=""></label>
                     <input type="date" value="{{$formattedDate}}" id="edituserage" name="date_input"
                         placeholder="age">
-                        @error('date_input')
-                        <h3 class="input-error" id="email-error">{{$message}}</h3>
-                    @enderror
                         <label for=""></label>
-                    <input type="text" id="edituserfrom" name="address_input" placeholder="from">
-
-                    @error('address_input')
-                    <h3 class="input-error" id="email-error">{{$message}}</h3>
-                @enderror
+                   
                     <h3 class="changing-password pointer">change password</h3>
                     <button type="submit" name="edit_user" id="edit-user-info-button">Submit Info</button>
 
@@ -357,18 +338,9 @@
 
                     <label for="current_password"></label>
                     <input type="password" id="" name="current_password" placeholder="Current password">
-                    @error('current_password')
-        <h3 class="input-error" id="current-password-error">{{$message}}</h3>
-    @enderror
+                   
                     <label for="new_password"></label>
                     <input type="password" id="" name="new_password" placeholder="New password ">
-                    @error('new_password')
-        <h3 class="input-error" id="current-password-error">{{$message}}</h3>
-    @enderror
-
-
-
-
                     <button type="submit" name="update_password" id="confirm-change-password">change</button>
 
                 </form>

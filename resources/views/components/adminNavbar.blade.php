@@ -4,9 +4,9 @@
             <h1 class="Poiret">edge.</h1>
             <div class=" nav-list-container">
                 <ul class="nav-list ">
-                    <li><a href="/adminProfile"> Users</a></li>
-                    <li><a href="/adminReports">Reports</a></li>
-                    <li><a href="/adminAppoinments ">Apointments</a></li>
+                    <li><a href="/admin/"> Users</a></li>
+                    <li><a href="/admin/reports">Reports</a></li>
+                    <li><a href="/admin/appointments ">Apointments</a></li>
 
                 </ul>
             </div>

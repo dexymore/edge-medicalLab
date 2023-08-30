@@ -15,11 +15,11 @@ class PatientAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-if(session('mrn')===null){
-    return redirect()->route('login')->with('error', 'You must login first to access this resource');
-}
+        if (session('mrn') === null) {
+            return redirect()->route('login')->with('error', 'You must login first to access this resource');
+        }
 
-        
+
         return $next($request);
     }
 }

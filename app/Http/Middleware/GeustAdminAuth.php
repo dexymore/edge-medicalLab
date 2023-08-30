@@ -15,10 +15,10 @@ class GeustAdminAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-if(session('id')!==null){
+        if (session('id') !== null) {
             return to_route('adminProfile');
-}
-        
+        }
+
         return $next($request);
     }
 }

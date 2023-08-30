@@ -25,10 +25,7 @@
 
 <body>
     <div class="report-container">
-        <iframe src="{{ asset('uploads/' . $url) }}" frameborder="0"></iframe>
-
-
-
+        <iframe src="{{ asset('storage/uploads/' . $url) }}" frameborder="0"></iframe>
     </div>
 </body>
 

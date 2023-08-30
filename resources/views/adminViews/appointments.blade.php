@@ -23,17 +23,6 @@
 
 
             <div class=" rowheaders">
-
-                {{-- <li>
-                    <div class="rowItem">
-                        <h3>
-                            id
-                        </h3>
-                        <h4>
-                           {{$appointment->app_id}}
-                        </h4>
-                    </div>
-                </li> --}}
                 <li>
                     <div class="rowItem">
                         <h3>
@@ -108,19 +97,13 @@
                         </h4>
                     </div>
                 </li>
-               
-                {{-- <li>
-                    <div class=" rowItem">
-                        <h3>
-                            MRN
-                        </h3>
-                        <h4 id="appointuserid">
-                            {{$appointment->mrn}}
-                        </h4>
-                    </div>
-                </li> --}}
                 <li>
                     <div class="rowButtons">
+                        @php
+                            $appointmentDate = \Carbon\Carbon::parse($appointment->date);
+                            $currentDate = \Carbon\Carbon::now();
+                        @endphp
+                        @if($appointmentDate->isPast() && $appointment->has_report === 0)
 
                         <div class="add add-report"
                             id="actions-add-report"
@@ -137,11 +120,20 @@
                             >
                             <img src="{{asset('assets/icons8-add-20.png')}}" alt="Add Icon">
                         </div>
+                        @elseif($appointmentDate->isPast() && $appointment->has_report === 1)
+                        <a class="view pointer" href="./view-document/{{$appointment->url}}" target="_blank">
+                            <img src="{{asset("/assets/icons8-file-24.png")}}">
+                        </a>
+                        
+                        @endif
+                        @if($appointmentDate->isFuture())
+
                         <div class="update-appoint" data-id="{{$appointment->app_id}}"
                              data-mrn="{{$appointment->mrn}}"
                              data-phone="{{$appointment->phone_number}}">
                             <img src="{{ asset('/assets/icons8-modify-20.png') }}">
                         </div>
+                        @endif
                         <div class="delete" data-id="{{$appointment->app_id}}">
                             <img src="{{ asset('/assets/icons8-delete-20.png') }}">
                         </div>

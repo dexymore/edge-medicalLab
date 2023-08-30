@@ -4,6 +4,11 @@
     @include('components.navbar')
 
     <main>
+        @if ($errors->any())
+            @php
+                echo "<script>alert('Please fill in all the appointment details correctly');</script>";
+            @endphp
+        @endif
         <section class="hero" id="hero">
             <div class="hero-img-container">
                 <img class="hero-img" src={{asset("/assets/background.jpg")}} alt="" />
@@ -264,10 +269,7 @@
                                 
                                 <li>
                                     <input type="text" placeholder="Your Phone Number" id="phone" name="phone">
-                                @error('phone')
-                                <h3 class="input-error" id="name-error">{{$message}}</h3>
-                                    
-                                @enderror
+                                
                                 </li>
                                 <li>
                                     <select class="select" name="selected">
@@ -278,24 +280,12 @@
                                         </option>
                                         @endforeach
                                     </select>
-                                    @error('selected')
-                                          <h3 class="input-error" id="name-error">{{$message}}</h3>
-                                        
-                                    @enderror
                                 </li>
                                 <li>
                                     <input class="date" type="time" placeholder="time" name="time">
-                                    @error('time')
-                                          <h3 class="input-error" id="name-error">{{$message}}</h3>
-                                        
-                                    @enderror
                                 </li>
                                 <li>
                                     <input class="date" id="date" type="date" placeholder="Date" name="date">
-
-                                    @error('date')
-                                          <h3 class="input-error" id="name-error">{{$message}}</h3>
-                                        @enderror
                                 </li>
                             </ul>
                             <div class="contact-actions"></div>
