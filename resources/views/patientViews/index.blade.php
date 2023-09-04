@@ -396,7 +396,7 @@
                     <h3 class="Poiret">edge</h3>
                     <p class="footer__copyright">
                         &copy; Copyright by
-                        <a class="footer__link twitter-link" href="https://twitter.com/ibrahim_askar11">Ibrahim Askar
+                        <a class="footer__link twitter-link" href="https://www.facebook.com/ahmfd22/">Ahmed suleiman
                         </a>All rights reserved
                     </p>
                 </div>
