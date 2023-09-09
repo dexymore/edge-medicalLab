@@ -44,7 +44,7 @@ Route::group(['middleware' => 'GuestPatientAuth'], function () {
 
 Route::get('/view-document/{url}', [PatientController::class, 'viewDocument'])->name('viewDocument');
 
-Route::get('/view-document/{url}', [PatientController::class, 'viewDocument'])->name('viewDocument');
+
 
 ///admin routes
 
@@ -55,16 +55,16 @@ Route::group(['middleware' => 'GeustAdminAuth'], function () {
 });
 
 Route::group(['middleware' => 'AdminAuth'], function () {
-
+Route::get('/admin/view-document/{url}', [PatientController::class, 'viewDocument'])->name('viewDocument');
     Route::get('logoutAdmin', [AdminController::class, 'logoutAdmin'])->name('logoutAdmin');
-    Route::get('/adminProfile', [AdminController::class, 'adminProfile'])->name('adminProfile');
+    Route::get('/admin/Profile', [AdminController::class, 'adminProfile'])->name('adminProfile');
     Route::post('/deleteUser', [AdminController::class, 'deleteUser'])->name('deleteUser');
     Route::post('/editUserInfo', [AdminController::class, 'editUserInfo'])->name('editUserInfo');
     Route::post('/addAppointment', [AdminController::class, 'addAppointment'])->name('addAppointment');
-    Route::get('/adminAppoinments', [AdminController::class, 'adminAppoinments'])->name('adminAppoinments');
+    Route::get('/admin/Appoinments', [AdminController::class, 'adminAppoinments'])->name('adminAppoinments');
     Route::post('/updateUserAppointment', [AdminController::class, 'updateUserAppointment'])->name('updateUserAppointment');
     Route::post('/deleteUserAppointment', [AdminController::class, 'deleteUserAppointment'])->name('deleteUserAppointment');
-    Route::get('/adminReports', [AdminController::class, 'adminReports'])->name('adminReports');
+    Route::get('/admin/Reports', [AdminController::class, 'adminReports'])->name('adminReports');
     Route::post('/uploadFile', [AdminController::class, 'uploadFile'])->name('uploadFile');
     Route::post('/AdmindeleteReport', [AdminController::class, 'AdmindeleteReport'])->name('AdmindeleteReport');
     Route::post('/updateFile', [AdminController::class, 'updateFile'])->name('updateFile');
